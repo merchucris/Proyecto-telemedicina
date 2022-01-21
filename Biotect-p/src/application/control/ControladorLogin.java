@@ -1,11 +1,18 @@
 package application.control;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
 
 import application.model.Usuario;
 import javafx.event.ActionEvent;
@@ -40,6 +47,14 @@ public class ControladorLogin {
 
     	String user = etiquetauser.getText();
     	String password = etiquetaPassword.getText();
+
+    	ControladorLogin myJson = new ControladorLogin();
+    	
+    	try {
+    	myJson.leerJsonPartes("admin.json");
+    	}catch (Exception e) {
+    		System.out.println("*** Fallo en: "+e);
+		}
     	
     	if(user.equals("mcr") && password.equals("corde3")){
     		try {
@@ -68,12 +83,63 @@ public class ControladorLogin {
     		
     		
     	}
-    	//Aquí se comprueba el tipo de usuario que es. En principio, sólo admin, lo creo a pelo
+    	//Aquí se comprueba el tipo de usuario que es. En principio, sólo admin. Lo creo "a pelo"
     	   	
 
 
     }
+    void leerJsonPartes(String sFile) throws java.io.IOException {
+		JsonParser parser = new JsonParser();
+        FileReader fr = new FileReader(sFile);
+        JsonElement admin = parser.parse(fr);
+        dumpJSONElement(admin);
+    }
 
+//    void escribirJsonClass() throws java.io.IOException {
+//    	Gson gson = new Gson();
+//        MiObjeto obj = new MiObjeto("Juan", "Madrid", null);
+//        String jsonString = gson.toJson(obj);
+//        System.out.println("JSON: " + jsonString);       
+//    }
+    
+    void dumpJSONElement(JsonElement elemento) {
+        if (elemento.isJsonObject()) {
+            System.out.println("Es objeto");
+            JsonObject obj = elemento.getAsJsonObject();
+            java.util.Set<java.util.Map.Entry<String,JsonElement>> entradas = obj.entrySet();
+            java.util.Iterator<java.util.Map.Entry<String,JsonElement>> iter = entradas.iterator();
+            while (iter.hasNext()) {
+                java.util.Map.Entry<String,JsonElement> entrada = iter.next();
+                System.out.println("Clave: " + entrada.getKey());
+                System.out.println("Valor: " + entrada.getValue());
+            }
+     
+        } else if (elemento.isJsonArray()) {
+            JsonArray array = elemento.getAsJsonArray();
+            System.out.println("Es array. Numero de elementos: " + array.size());
+            java.util.Iterator<JsonElement> iter = array.iterator();
+            while (iter.hasNext()) {
+                JsonElement entrada = iter.next();
+                dumpJSONElement(entrada);
+            }
+            
+        } else if (elemento.isJsonPrimitive()) {
+            System.out.println("Es primitiva");
+            JsonPrimitive valor = elemento.getAsJsonPrimitive();
+            if (valor.isBoolean()) {
+                System.out.println("Es booleano: " + valor.getAsBoolean());
+            } else if (valor.isNumber()) {
+                System.out.println("Es numero: " + valor.getAsNumber());
+            } else if (valor.isString()) {
+                System.out.println("Es texto: " + valor.getAsString());
+            }
+        } else if (elemento.isJsonNull()) {
+            System.out.println("Es NULL");
+        } else {
+            System.out.println("Es otra cosa");
+        }
+    }
+    
     //No va a existir.Borrar.
     @FXML
     void botonRegistrarse(ActionEvent event) {

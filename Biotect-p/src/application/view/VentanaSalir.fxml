@@ -25,27 +25,12 @@
                   </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                      <children>
-                        <Label layoutX="141.0" layoutY="91.0" text="Eliga el tipo de usuario a dar de alta">
+                        <Label layoutX="141.0" layoutY="91.0" text="Gracias por entrar a Biotect.">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </Label>
-                        <Button fx:id="esBotonPaciente" layoutX="141.0" layoutY="150.0" mnemonicParsing="false" text="Paciente">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="esBotonMedico" layoutX="274.0" layoutY="150.0" mnemonicParsing="false" text="Médico">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="esBotonConsultor" layoutX="395.0" layoutY="150.0" mnemonicParsing="false" text="Conultor">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="botonSalir" layoutX="469.0" layoutY="223.0" mnemonicParsing="false" text="Salir">
+                        <Button fx:id="botonSalir" layoutX="455.0" layoutY="224.0" mnemonicParsing="false" text="Volver a entrar">
                            <font>
                               <Font size="14.0" />
                            </font>
