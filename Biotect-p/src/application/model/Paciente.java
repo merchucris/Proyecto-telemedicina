@@ -1,15 +1,53 @@
 package application.model;
 
 public class Paciente extends Persona {
-
-	public Paciente(String nombre, String apellidos, int iD, int edad) {
-		super(nombre, apellidos, iD, edad);
-
+	
+	private String usuario;
+	private String password;
+	private int edad;
+	private String sexo;
+	private String[] medicos;
+    
+	public Paciente(String dni, String nombre, String apellidos, String correo, String password, int edad, String sexo, String[] medicos) {
+		super(dni, nombre, apellidos, correo);
+		this.password = password;
 	}
 
+	public String getUsuario() {
+		return getDni();
+	}
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public int getEdad() {
+		return edad;
+	}
+	public void setEdad(int edad) {
+		this.edad = edad;
+	}
+	public String getSexo() {
+		return sexo;
+	}
+	public void setSexo(String sexo) {
+		this.sexo = sexo;
+	}
+	public String[] getMedicos() {
+		return medicos;
+	}
+	public void setMedicos (String medicos) {
+		this.password = medicos;
+	}
 
-
-
-
-
+	@Override
+	public String toString() {
+		String salida = "\n\t-usuario: " + usuario;
+		salida += "\n\t-Contrase�a: " + password;
+		return salida;
+	}
 }

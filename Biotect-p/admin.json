@@ -1,7 +1,9 @@
-{
-"administrador":
-    {
-    "nombre": "mcmr",
+[
+  {
+    "dni": "4444M",
+    "nombre": "Josefina",
+    "apellidos": "García Pérez",
+    "correo": "asdfg@correo.es",
     "password": "corde3"
-    }
-}
+  }
+]

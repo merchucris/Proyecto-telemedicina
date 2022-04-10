@@ -1,35 +1,35 @@
 package application.model;
 
-import java.sql.Timestamp;
-import java.util.Date;
-
 public class Persona {
 
+	private String dni;
 	private String nombre;
 	private String apellidos;
-	private int ID;
-	private int edad;
+	private String correo;
 
-	public Timestamp timestamp;
-	public Date dateTime;
-
-	public Persona(String nombre, String apellidos, int iD, int edad) {
+	public Persona(String dni, String nombre, String apellidos, String correo) {
 		super();
-		this.nombre = nombre;
+		this.setDni(dni);
+		this.setNombre(nombre);
 		this.setApellidos(apellidos);
-		ID = iD;
-		this.setEdad(edad);
-		timestamp = new Timestamp(new Date().getTime());
-		dateTime =  new java.util.Date();
+		this.setCorreo(correo);
 	}
 
 	@Override
 	public String toString() {
-	String salida = "ID [" + ID + "]";
+	String salida = "-DNI: " + dni;
 	salida += "\n\t-Nombre: " + nombre;
-	salida += "\n\t-Apellido: " + apellidos;
-	salida += "\n\t-Edad: " + edad;
+	salida += "\n\t-Apellidos: " + apellidos;
+	salida += "\n\t-E-mail: " + correo;
 		return salida;
+	}
+
+	public String getDni() {
+		return dni;
+	}
+
+	public void setDni(String dni) {
+		this.dni = dni;
 	}
 
 	public String getNombre() {
@@ -40,22 +40,6 @@ public class Persona {
 		this.nombre = nombre;
 	}
 
-	public int getID() {
-		return ID;
-	}
-
-	public void setID(int iD) {
-		ID = iD;
-	}
-
-	public int getEdad() {
-		return edad;
-	}
-
-	public void setEdad(int edad) {
-		this.edad = edad;
-	}
-
 	public String getApellidos() {
 		return apellidos;
 	}
@@ -63,5 +47,12 @@ public class Persona {
 	public void setApellidos(String apellidos) {
 		this.apellidos = apellidos;
 	}
+	
+	public String getCorreo() {
+		return correo;
+	}
 
+	public void setCorreo(String correo) {
+		this.correo = correo;
+	}
 }

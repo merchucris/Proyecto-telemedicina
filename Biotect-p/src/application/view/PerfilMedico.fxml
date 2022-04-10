@@ -15,14 +15,14 @@
          <children>
             <SplitPane dividerPositions="0.24120603015075376" layoutX="220.0" layoutY="64.0" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: grey;">
                      <children>
-                        <ImageView fitHeight="93.0" fitWidth="128.0" layoutX="426.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="53.0" fitWidth="223.0" layoutX="325.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../../../Pictures/biotectlogo.png" />
+                              <Image url="@../../../Iconos/Imagen%201.png" />
                            </image>
                         </ImageView>
-                        <Label layoutX="48.0" layoutY="24.0" text="Médico">
+                        <Label layoutX="48.0" layoutY="24.0" text="Médico" textFill="WHITE">
                            <font>
                               <Font size="30.0" />
                            </font>
@@ -31,7 +31,7 @@
                   </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                      <children>
-                        <Button fx:id="botonSalir" layoutX="469.0" layoutY="223.0" mnemonicParsing="false" text="Salir">
+                        <Button fx:id="botonSalir" layoutX="421.0" layoutY="226.0" mnemonicParsing="false" onAction="#salirM" prefHeight="30.0" prefWidth="114.0" text="Salir">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -45,7 +45,12 @@
                         <TextField fx:id="miDNIM" layoutX="122.0" layoutY="96.0" />
                         <TextField layoutX="122.0" layoutY="129.0" />
                         <TextField fx:id="miCorreoM" layoutX="122.0" layoutY="129.0" />
-                        <Button fx:id="botonVolverM" layoutX="287.0" layoutY="226.0" mnemonicParsing="false" onAction="#crearMedico" text="Volver">
+                        <Button fx:id="botonVolverM" layoutX="287.0" layoutY="226.0" mnemonicParsing="false" onAction="#volverMenuM" prefHeight="30.0" prefWidth="114.0" text="Volver">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="botonMostrarM" layoutX="157.0" layoutY="226.0" mnemonicParsing="false" onAction="#mostrarPerfilM" prefHeight="30.0" prefWidth="114.0" text="Mostrar">
                            <font>
                               <Font size="14.0" />
                            </font>

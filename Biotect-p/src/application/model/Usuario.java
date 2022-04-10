@@ -41,5 +41,4 @@ public class Usuario {
 		return salida;
 	}
 
-
 }

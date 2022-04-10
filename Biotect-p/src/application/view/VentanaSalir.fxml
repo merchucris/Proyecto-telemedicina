@@ -14,11 +14,11 @@
          <children>
             <SplitPane dividerPositions="0.24120603015075376" layoutX="220.0" layoutY="64.0" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: grey;">
                      <children>
                         <ImageView fitHeight="93.0" fitWidth="128.0" layoutX="426.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../../../Pictures/biotectlogo.png" />
+                              <Image url="@../../../../../../Pictures/biotectlogo.png" />
                            </image>
                         </ImageView>
                      </children>
@@ -30,7 +30,12 @@
                               <Font size="20.0" />
                            </font>
                         </Label>
-                        <Button fx:id="botonSalir" layoutX="455.0" layoutY="224.0" mnemonicParsing="false" text="Volver a entrar">
+                        <Button fx:id="botonSalir" layoutX="275.0" layoutY="225.0" mnemonicParsing="false" onAction="#volverAEntrar" text="Volver a entrar">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="botonSalirFinal" layoutX="415.0" layoutY="225.0" mnemonicParsing="false" onAction="#salirAplicacion" prefHeight="25.0" prefWidth="111.0" text="Salir">
                            <font>
                               <Font size="14.0" />
                            </font>

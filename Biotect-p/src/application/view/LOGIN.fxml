@@ -29,9 +29,9 @@
          <children>
             <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: black;">
                <children>
-                  <ImageView fitHeight="203.0" fitWidth="375.0" layoutX="199.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="150.0" fitWidth="390.0" layoutX="105.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../Pictures/biotectlogo.png" />
+                        <Image url="@../../../Iconos/Imagen%201.png" />
                      </image>
                   </ImageView>
                </children>
@@ -46,7 +46,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <TextField fx:id="etiquetauser" promptText="Usuario" style="-fx-background-color: transparent;">
+                  <TextField fx:id="etiquetauser" promptText="DNI" style="-fx-background-color: transparent;">
                      <font>
                         <Font size="18.0" />
                      </font>

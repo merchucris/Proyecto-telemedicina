@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXTextArea?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -40,9 +41,12 @@
    <center>
       <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
-          <Tab fx:id="MenuPaciente" onSelectionChanged="#MostrarMenuPantalla" text="Menu Consultor">
+          <Tab text="Menu Consultor">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: grey;">
+                     <children>
+                        <JFXTextArea fx:id="panelVisualizarOpcionC" layoutX="18.0" layoutY="16.0" prefHeight="278.0" prefWidth="407.0" />
+                     </children></AnchorPane>
             </content>
           </Tab>
         </tabs>
@@ -59,10 +63,10 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <Button fx:id="PacienteAso" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#VisualizarPaciente" prefHeight="66.0" prefWidth="159.0" style="-fx-background-color: white; -fx-border-color: grey;" text="Paciente Asociado" />
-            <Button fx:id="Estado" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#AbrirEstado" prefHeight="72.0" prefWidth="175.0" style="-fx-background-color: white; -fx-border-color: grey;" text="Estado" />
-            <Button fx:id="Info" layoutX="10.0" layoutY="37.0" mnemonicParsing="false" onAction="#abrirInfo" prefHeight="65.0" prefWidth="156.0" style="-fx-background-color: white; -fx-border-color: gray;" text="Información" />
-            <Button fx:id="Exit" layoutX="10.0" layoutY="64.0" mnemonicParsing="false" onAction="#abrirExit" prefHeight="70.0" prefWidth="172.0" style="-fx-background-color: white; -fx-border-color: gray;" text="Salir" />
+            <Button fx:id="botonPerfilC" mnemonicParsing="false" onAction="#verPerfilC" prefHeight="69.0" prefWidth="156.0" text="Mi perfil" />
+            <Button fx:id="botonListaPacientes" mnemonicParsing="false" onAction="#verListaPacientes" prefHeight="71.0" prefWidth="159.0" text="Lista de pacientes infectados" />
+            <Button fx:id="botonVerDatosC" mnemonicParsing="false" onAction="#verDatosSensoresC" prefHeight="71.0" prefWidth="163.0" text="Datos de los sensores" />
+            <Button fx:id="botonSalirC" mnemonicParsing="false" onAction="#salirC" prefHeight="71.0" prefWidth="156.0" text="Salir" />
          </children>
       </VBox>
    </right>

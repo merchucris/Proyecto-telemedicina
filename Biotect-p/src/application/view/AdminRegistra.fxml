@@ -14,11 +14,11 @@
          <children>
             <SplitPane dividerPositions="0.24120603015075376" layoutX="220.0" layoutY="64.0" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: grey;">
                      <children>
                         <ImageView fitHeight="93.0" fitWidth="128.0" layoutX="426.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../../../Pictures/biotectlogo.png" />
+                              <Image url="@../../../../../../Pictures/biotectlogo.png" />
                            </image>
                         </ImageView>
                      </children>
@@ -30,22 +30,22 @@
                               <Font size="20.0" />
                            </font>
                         </Label>
-                        <Button fx:id="esBotonPaciente" layoutX="141.0" layoutY="150.0" mnemonicParsing="false" text="Paciente">
+                        <Button fx:id="esBotonPaciente" layoutX="141.0" layoutY="150.0" mnemonicParsing="false" onAction="#abrirRegistroP" text="Paciente">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Button>
-                        <Button fx:id="esBotonMedico" layoutX="274.0" layoutY="150.0" mnemonicParsing="false" text="Médico">
+                        <Button fx:id="esBotonMedico" layoutX="274.0" layoutY="150.0" mnemonicParsing="false" onAction="#abrirRegistroM" text="Médico">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Button>
-                        <Button fx:id="esBotonConsultor" layoutX="395.0" layoutY="150.0" mnemonicParsing="false" text="Conultor">
+                        <Button fx:id="esBotonConsultor" layoutX="395.0" layoutY="150.0" mnemonicParsing="false" onAction="#abrirRegistroC" text="Consultor">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Button>
-                        <Button fx:id="botonSalir" layoutX="469.0" layoutY="223.0" mnemonicParsing="false" text="Salir">
+                        <Button fx:id="botonSalir" layoutX="469.0" layoutY="223.0" mnemonicParsing="false" onAction="#salir" text="Salir">
                            <font>
                               <Font size="14.0" />
                            </font>
