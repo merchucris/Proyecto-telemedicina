@@ -55,7 +55,7 @@ public class ControladorLogin {
     	String password = etiquetaPassword.getText();
 
     	ControladorLogin myJson = new ControladorLogin();
-
+    	// CAMBIO A BBDD
     	try {
         	Administrador[] adms = myJson.leerJsonAdministradores("admin.json");
     	    if (comprobarAdministrador(event, adms, user, password)) return;
