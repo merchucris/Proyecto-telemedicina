@@ -5,6 +5,7 @@ import com.google.gson.reflect.TypeToken;
 import application.model.Consultor;
 import application.model.Medico;
 import application.model.Paciente;
+import application.model.Sensor;
 
 import java.io.*;
 import java.lang.reflect.Type;
@@ -25,6 +26,9 @@ public class JsonBD implements Bd {
     //Fichero Json de pacientes
     private static final String FICHERO_BD_PACIENTES = "pacientes.json";
     
+    //Fichero Json de sensores
+    private static final String FICHERO_BD_SENSORES = "sensores.json";
+    
     // Lista de consultores
     private List<Consultor> consultores;
     
@@ -33,6 +37,9 @@ public class JsonBD implements Bd {
 
     //Lista de pacientes
     private List<Paciente> pacientes;
+    
+    //Lista de sensores
+    private List<Sensor> sensores;
 
     // Conversor de archivos JSON en objetos Java y viceversa
     Gson gson = new Gson();
@@ -51,6 +58,17 @@ public class JsonBD implements Bd {
         this.consultores = recuperarListaConsultores();
         this.medicos = recuperarListaMedicos();
         this.pacientes = recuperarListaPacientes();
+        System.out.println("####### PACIENTES PRUEBAS ##########");
+        for (Paciente pac : this.pacientes) {
+        	System.out.println("##################");
+        	System.out.print("PAciente" + pac.getNombre() + "TIENE MEDICOS");
+        	String medicos[] = pac.getMedicos();
+        	for (String med : medicos) {
+        		System.out.print("Medico " + med);
+        	}
+        	System.out.println("########");
+        }
+        this.sensores = recuperarListaSensores();
         System.out.println("*****2");
     }
 
@@ -116,6 +134,27 @@ public class JsonBD implements Bd {
 
 		return false;
 	}
+	
+	// Modificar un sensor por su dni (recuperar sensores + borrar sensor + añadir sensor modificado)
+	@Override
+	public boolean modificarSensor(String dni, Sensor sensor) {
+        //Para depurar
+        System.out.println("Recuperar sensores...");
+        List<Sensor> sensores = recuperarSensores();
+        System.out.println("Eliminar consultor antes de añadir el sensor actualizado");
+        sensores.remove(sensor);
+        eliminarSensor(dni);
+        System.out.println("Añadir sensor...");
+        sensores.add(sensor);
+        //Para depurar
+        System.out.println("Listo para guardar el sensor modificado");
+        // Guardar los sensores
+        guardarSensores();
+        //Para depurar
+        System.out.println("Sensor modificado (guardado) [" + sensor.getDni() + "] OK");
+
+		return false;
+	}
 
 	// Recuperar el listado de usuarios del JSON como objetos Java
     public List<Consultor> recuperarListaConsultores() {
@@ -149,6 +188,17 @@ public class JsonBD implements Bd {
         final Type tipoListaPaciente = new TypeToken<List<Paciente>>(){}.getType();
         return gson.fromJson(pacienteJSON, tipoListaPaciente);
     }
+    
+	// Recuperar el listado de usuarios del JSON como objetos Java
+    public List<Sensor> recuperarListaSensores() {
+        //Depurar
+        System.out.println("Obteniendo listado de usuarios desde la persistencia JSON... 1");
+        System.out.println(FICHERO_BD_SENSORES);
+
+        String sensorJSON = recuperarJSONString(FICHERO_BD_SENSORES);
+        final Type tipoListaSensor = new TypeToken<List<Sensor>>(){}.getType();
+        return gson.fromJson(sensorJSON, tipoListaSensor);
+    }
 
     // Recuperar el contenido de un fichero JSON del almacenamiento como String
     private String recuperarJSONString(String nombreFichero) {
@@ -179,6 +229,7 @@ public class JsonBD implements Bd {
     // Guardar el JSON de consultores
     private void guardarConsultores() {
         String json = gson.toJson(this.consultores);
+        
         File file = new File(FICHERO_BD_CONSULTORES);
         guardarJSONFichero(json,file);
     }
@@ -194,6 +245,14 @@ public class JsonBD implements Bd {
     private void guardarPacientes() {
         String json = gson.toJson(this.pacientes);
         File file = new File(FICHERO_BD_PACIENTES);
+        guardarJSONFichero(json,file);
+    }
+
+    // Guardar el JSON de consultores
+    private void guardarSensores() {
+        String json = gson.toJson(this.sensores);
+        
+        File file = new File(FICHERO_BD_SENSORES);
         guardarJSONFichero(json,file);
     }
 
@@ -265,7 +324,26 @@ public class JsonBD implements Bd {
        	return null;
 
     }
-   
+    
+    // Recuperar un sensor por su dni
+    private Sensor recuperarSensorPorDni(String dni) {
+        //Para depurar
+        System.out.println("Buscando sensor [" + dni + "]...");
+
+        if  (sensores != null) {
+            for (Sensor sensorBusqueda : sensores) {
+                if (sensorBusqueda.getDni().equals(dni)) {
+                    System.out.println("Sensor encontrado [" + dni + "] -> OK");
+                    return sensorBusqueda;
+                }
+            }
+        } 
+       	//Si no se ha encontrado el usuario
+       	System.out.println("No se ha encontrado el sensor [" + dni + "]");
+       	return null;
+
+    }
+    
     // Añadir un nuevo consultor
     @Override
     public boolean altaConsultor(Consultor consultor) {
@@ -344,7 +422,32 @@ public class JsonBD implements Bd {
         return true;
     }
 
+    // Añadir un nuevo consultor
+    @Override
+    public boolean altaSensor(Sensor sensor) {
+        // No debe ya haber un consultor
+        if (recuperarSensorPorDni(sensor.getDni()) != null) {
+            //Para depurar
+            System.out.println("El sensores [" + sensor.getDni() + "] ya existe...");
 
+            return false;
+        }
+
+        //Para depurar
+        System.out.println("Dando de alta sensor [" + sensor.getDni() + "]...");
+        //Agregamos el usuario a la lista de objetos de usuarios Java
+        sensores.add(sensor);
+        //Para depurar
+        System.out.println("Listo para dar de alta al sensor [" + sensor.getDni() + "]");
+        // Guardar los consultores
+        guardarSensores();
+
+        //Para depurar
+        System.out.println("Consultor dado de alta (guardado) [" + sensor.getDni() + "] OK");
+
+        return true;
+    }
+    
     // Recuperar un consultor por su dni
     @Override
     public Consultor recuperarConsultor(String dni) {
@@ -361,6 +464,12 @@ public class JsonBD implements Bd {
     @Override
     public Paciente recuperarPaciente(String dni) {
         return recuperarPacientePorDni(dni);
+    }
+    
+    // Recuperar un sensor por su dni
+    @Override
+    public Sensor recuperarSensor(String dni) {
+        return recuperarSensorPorDni(dni);
     }
 
     // Recuperar todos los consultores
@@ -379,6 +488,12 @@ public class JsonBD implements Bd {
     @Override
     public List<Paciente> recuperarPacientes() {
         return pacientes;
+    }
+    
+    // Recuperar todos los sensores
+    @Override
+    public List<Sensor> recuperarSensores() {
+        return sensores;
     }
     
     // Eliminar un consultor por su dni
@@ -428,6 +543,23 @@ public class JsonBD implements Bd {
 
         //Para depurar
         System.out.println("Paciente eliminado [" + dni + "]");
+
+        return true;
+    }
+    
+    // Eliminar un sensor por su dni
+    @Override
+    public boolean eliminarSensor(String dni) {
+        //Para depurar
+        System.out.println("Eliminando consultor [" + dni + "]...");
+
+        Sensor sensor = recuperarSensorPorDni(dni);
+        if (sensor == null)
+            return false;
+        sensores.remove(sensor);
+
+        //Para depurar
+        System.out.println("Sensor eliminado [" + dni + "]");
 
         return true;
     }

@@ -28,4 +28,7 @@ public class Medico extends Persona {
 		salida += "\n\t-Contrase�a: " + password;
 		return salida;
 	}
+
+
+
 }

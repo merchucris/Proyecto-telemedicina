@@ -6,11 +6,13 @@ public class Paciente extends Persona {
 	private String password;
 	private int edad;
 	private String sexo;
-	private String[] medicos;
+	private String[] medicos = new String[5];
     
 	public Paciente(String dni, String nombre, String apellidos, String correo, String password, int edad, String sexo, String[] medicos) {
 		super(dni, nombre, apellidos, correo);
 		this.password = password;
+		System.out.print("Actualiza médicos" + this.medicos.length);
+		
 	}
 
 	public String getUsuario() {
@@ -35,13 +37,15 @@ public class Paciente extends Persona {
 		return sexo;
 	}
 	public void setSexo(String sexo) {
+	
 		this.sexo = sexo;
 	}
 	public String[] getMedicos() {
 		return medicos;
 	}
-	public void setMedicos (String medicos) {
-		this.password = medicos;
+	public void setMedicos (String [] medicos) {
+		System.out.print("Actualiza médicos" + medicos.length);
+		this.medicos = medicos;
 	}
 
 	@Override

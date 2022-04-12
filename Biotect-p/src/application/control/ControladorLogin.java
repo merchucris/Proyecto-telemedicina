@@ -3,6 +3,11 @@ package application.control;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -36,6 +41,11 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class ControladorLogin {
+	String BBDDName;
+	Connection conn = null;
+	Statement stmt = null;
+	PreparedStatement pstmt = null;
+
     @FXML
     private TextField etiquetauser;
 
@@ -50,7 +60,18 @@ public class ControladorLogin {
 
     @FXML
     void entrarLogin(ActionEvent event) {
-
+//    	try {
+//			Class.forName("org.sqlite.JDBC");
+//			conn = DriverManager.getConnection("jdbc:sqlite:"+"prbbiotect");
+//			//stmt = conn.createStatement();
+//		} catch (ClassNotFoundException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
     	String user = etiquetauser.getText();
     	String password = etiquetaPassword.getText();
 
@@ -131,9 +152,8 @@ public class ControladorLogin {
 			for (Medico meds : medics ) {
 				if (meds.getUsuario().equals(user) && meds.getPassword().equals(password)) {
 					FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/MenuMedico.fxml"));
-					ControladorMenuMedico ControladorMenuMedico = new ControladorMenuMedico();
+					ControladorMenuMedico ControladorMenuMedico = new ControladorMenuMedico(meds);
 					loader.setController(ControladorMenuMedico);
-					ControladorMenuMedico.setMedico(meds);
 					Parent root = loader.load();
 					Stage stage = new Stage();
 					stage.setScene(new Scene(root));
