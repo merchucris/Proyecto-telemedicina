@@ -6,6 +6,8 @@ import java.util.List;
 import com.jfoenix.controls.JFXTextArea;
 
 import application.model.Consultor;
+import application.model.Paciente;
+import application.model.Sensor;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -91,11 +93,36 @@ public class ControladorMenuConsultor {
 
     @FXML
     void verDatosSensoresC(ActionEvent event) {
+   	 JsonBD ob = new JsonBD();
+  	 List<Sensor> senss = ob.recuperarSensores();
+  	 String cadenaSensores = "";
+  	 //List<String> medCheck = Arrays.asList(paciente.getMedicos());
+  	 for (Sensor sen:senss){
+  		System.out.print("SENSORES AL PACIENTE ASOCIADOS: " + sen);
+			//cadenaSensores+= "Fecha: "+ sen.getmarcaDeTiempo();
+			cadenaSensores+="Glucemia: " + sen.getglucemia();
+			cadenaSensores += "Saturación: "+ sen.getsaturacion();
+			cadenaSensores += "Temperatura: "+ sen.gettemperatura();
+			cadenaSensores += "\n";
+  	}
+  	panelVisualizarOpcionC.setText(cadenaSensores);
 
     }
 
     @FXML
     void verListaPacientes(ActionEvent event) {
+      	 JsonBD ob = new JsonBD();
+      	 List<Paciente> pacs = ob.recuperarPacientes();
+      	 String cadenaPacientes = "";
+      	 //List<String> medCheck = Arrays.asList(paciente.getMedicos());
+      	 for (Paciente pac:pacs){
+      		System.out.print("SENSORES AL PACIENTE ASOCIADOS: " + pac);
+      		    cadenaPacientes+= "Nombre: "+ pac.getNombre();
+      		    cadenaPacientes+="Apellido: " + pac.getApellidos();
+      		    cadenaPacientes += "DNI: "+ pac.getDni();
+      		    cadenaPacientes += "\n";
+      	}
+      	panelVisualizarOpcionC.setText(cadenaPacientes);
 
     }
     @FXML

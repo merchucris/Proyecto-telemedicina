@@ -3,6 +3,7 @@ package repo;
 import application.model.Consultor;
 import application.model.Medico;
 import application.model.Paciente;
+import application.model.Sensor;
 
 import java.util.List;
 
@@ -17,7 +18,10 @@ public interface Bd {
 
     //Añadir un nuevo paciente
     boolean altaPaciente(Paciente paciente);
-
+    
+    // Añadir un nuevo sensor
+    boolean altaSensor(Sensor sensor);
+    
     // Recuperar un consultor por su dni
     Consultor recuperarConsultor(String dni);
     
@@ -26,6 +30,9 @@ public interface Bd {
     
     //Recuperar un paciente por su dni
     Paciente recuperarPaciente(String dni);
+    
+    //Recuperar un sensor por su dni
+    Sensor recuperarSensor(String dni);
 
     // Recuperar todos los consultores
     List<Consultor> recuperarConsultores();
@@ -35,6 +42,9 @@ public interface Bd {
     
     // Recuperar todos los pacientes
     List<Paciente> recuperarPacientes();
+    
+    // Recuperar todos los sensores
+    List<Sensor> recuperarSensores();
 
     // Modificar un consultor por su dni (El registro se sabe que existe)
     boolean modificarConsultor(String dni, Consultor consultor);
@@ -45,6 +55,9 @@ public interface Bd {
     // Modificar un paciente por su dni (El registro se sabe que existe)
     boolean modificarPaciente(String dni, Paciente paciente);
     
+    // Modificar un sensor por su dni (El registro se sabe que existe)
+    boolean modificarSensor(String dni, Sensor sensor);
+    
     // Eliminar un consultor por su dni
     boolean eliminarConsultor(String dni);
     
@@ -53,4 +66,7 @@ public interface Bd {
     
     // Eliminar un paciente por su dni
     boolean eliminarPaciente(String dni);
+    
+    // Eliminar un sensor por su dni
+    boolean eliminarSensor(String dni);
 }

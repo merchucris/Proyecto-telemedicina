@@ -64,7 +64,7 @@ public class ControladorPerfilM {
 
     	try {
     		FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/MenuMedico.fxml"));
-    		ControladorMenuMedico ControladorMenuMedico = new ControladorMenuMedico();
+    		ControladorMenuMedico ControladorMenuMedico = new ControladorMenuMedico(this.meds);
 			loader.setController(ControladorMenuMedico);
 			Parent root = loader.load();
 			Stage stage = new Stage();

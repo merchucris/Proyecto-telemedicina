@@ -1,11 +1,15 @@
 package application.control;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 import com.jfoenix.controls.JFXTextArea;
 
 import application.model.Consultor;
 import application.model.Medico;
+import application.model.Paciente;
+import application.model.Sensor;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,13 +18,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import repo.JsonBD;
 
 public class ControladorMenuMedico {
 
 	private Medico medico;
-	
+	public ControladorMenuMedico(Medico medico) {
+		this.medico  =medico;
+	}
     public Medico getMedico() {
-		return medico;
+		return this.medico;
 	}
 
 	public void setMedico(Medico medico) {
@@ -69,12 +76,56 @@ public class ControladorMenuMedico {
     
     @FXML
     void verListaPacientes(ActionEvent event) {
-
+   	     JsonBD ob = new JsonBD();
+   	     List<Paciente> pacs = ob.recuperarPacientes();
+   	     String cadenaPacientes = "";
+   	     //List<String> pacCheck = Arrays.asList(medico.getPacientes());
+   	    
+   	     for (Paciente pac:pacs){
+   	    	 
+   		    System.out.print("PACIENTE DNI: " + pac.getDni());
+   		    String [] pacCheck = pac.getMedicos();
+   		    if (pacCheck.length>0) {
+   		    System.out.print(pacCheck.length);
+   		     for (String pacCh : pacCheck) {
+    		    	System.out.print("MEDICOS PACIENTES ASOCIADOS: " + pacCh );
+    			    if (pacCh.equalsIgnoreCase(medico.getDni())) {
+    				    cadenaPacientes+="Nombre: " + pac.getNombre();
+    				    cadenaPacientes+= "Apellido: "+ pac.getApellidos();
+    				    cadenaPacientes += "DNI: "+ pac.getDni() ;
+    				    cadenaPacientes += "\n";
+    			    }
+    		    }
+   		    }
+   	     }
+		panelVisualizarM.setText(cadenaPacientes);
     }
 
     @FXML
     void visualizarDatos(ActionEvent event) {
-
+      	 JsonBD ob = new JsonBD();
+      	 List<Sensor> senss = ob.recuperarSensores();
+      	 List<Paciente> pacs = ob.recuperarPacientes();
+      	 String cadenaSensores = "";
+      	 //List<String> medCheck = Arrays.asList(paciente.getMedicos());
+      	 for (Sensor sen:senss){
+      		
+      			System.out.print("SENSORES AL PACIENTE ASOCIADOS: " + sen);
+      			for (Paciente pac : pacs) {
+      				if (pac.getDni().equals(sen.getDni())) {
+      					cadenaSensores+= "Nombre Paciente: " + pac.getNombre() + " " + pac.getApellidos();
+      				}
+      			}
+      			
+      			//cadenaSensores+= "Fecha: "+ sen.getmarcaDeTiempo();
+      			cadenaSensores+="Glucemia: " + sen.getglucemia();
+      			cadenaSensores += "Saturación: "+ sen.getsaturacion();
+      			cadenaSensores += "Temperatura: "+ sen.gettemperatura();
+      			cadenaSensores += "\n";
+      		
+      		
+      	}
+      	panelVisualizarM.setText(cadenaSensores);
     }
     
     @FXML

@@ -1,95 +1,19 @@
 [
 {
     "dni": "5555M",
-    "marcaDeTiempo": "",
-    "temperatura": "",
-    "glucemia": ,
-    "saturacion":
+    "marcaDeTiempo": "1234",
+    "temperatura": 0.0,
+    "glucemia": 0,
+    "saturacion": 0 
     
   },
   {
-    "dni": "7777M",
-    "marcaDeTiempo": ,
-    "temperatura": ,
-    "glucemia": ,
-    "saturacion": 
-  },
-  {
-    "dni": "8888E",
-    "marcaDeTiempo": ,
-    "temperatura": ,
-    "glucemia": ,
-    "saturacion": 
-  },
-  {
-    "dni": "3828F",
-    "marcaDeTiempo": ,
-    "temperatura": ,
-    "glucemia": ,
-    "saturacion": 
-  },
-  {
-    "dni": "1333A",
-    "marcaDeTiempo": ,
-    "temperatura": ,
-    "glucemia": ,
-    "saturacion": 
-  },
-  {
-    "dni": "9898S",
-    "marcaDeTiempo": ,
-    "temperatura": ,
-    "glucemia": ,
-    "saturacion": 
-  },
-  {
-    "dni": "1333A",
-    "marcaDeTiempo": ,
-    "temperatura": ,
-    "glucemia": ,
-    "saturacion": 
-  },
-  {
-    "dni": "3828F",
-    "marcaDeTiempo": ,
-    "temperatura": ,
-    "glucemia": ,
-    "saturacion":
-  },
-  {
-    "dni": "1333A",
-    "marcaDeTiempo": ,
-    "temperatura": ,
-    "glucemia": ,
-    "saturacion": 
-  },
-  {
-    "dni": "3828F",
-    "marcaDeTiempo": ,
-    "temperatura": ,
-    "glucemia": ,
-    "saturacion": 
-  },
-  {
-    "dni": "1333A",
-    "marcaDeTiempo": ,
-    "temperatura": ,
-    "glucemia": ,
-    "saturacion": 
-  },
-  {
-    "dni": "3828F",
-    "marcaDeTiempo": ,
-    "temperatura": ,
-    "glucemia": ",
-    "saturacion":
-  },
-  {
-    "dni": "1333A",
-    "marcaDeTiempo": ,
-    "temperatura": ,
-    "glucemia": ,
-    "saturacion": 
+    "dni": "123123",
+    "marcaDeTiempo": "1234",
+    "temperatura": 0.0,
+    "glucemia": 0,
+    "saturacion": 0 
+    
   }
-  
+
 ]
