@@ -1,6 +1,7 @@
 package application.control;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,11 +19,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import repo.JsonBD;
+import repo.MariaBD;
 
 public class ControladorMenuPaciente {
     @FXML
-    private JFXTextArea panelVisualizarP;
+    //Private JFXTextArea panelVisualizarP;
+    private JFXTextArea panelVisualizarEstadoP;
 	private Paciente paciente;
 	public ControladorMenuPaciente(Paciente pac) {
 		this.paciente = pac;
@@ -45,9 +47,15 @@ public class ControladorMenuPaciente {
 
     @FXML
     private Button botonConsultarMedico;
+    
+    @FXML
+    private Button botonMensajeG;
 
     @FXML
-    private Button botonVerDatos;
+    private Button botonEnviarMensajeP;
+
+//    @FXML
+//    private Button botonVerDatos;
 
     @FXML
     private Button BotonSalirP;
@@ -56,7 +64,7 @@ public class ControladorMenuPaciente {
     void verPerfilP(ActionEvent event) {
 
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/PerfilPaciente.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/PerfilPacient.fxml"));
 			ControladorPerfilP ControladorPerfilPaciente = new ControladorPerfilP(getPaciente());
 			loader.setController(ControladorPerfilPaciente);
 			Parent root = loader.load();
@@ -76,29 +84,47 @@ public class ControladorMenuPaciente {
     
     @FXML
     void consultarMedico(ActionEvent event) {
-    	 JsonBD ob = new JsonBD();
-    	 List<Medico> medcs = ob.recuperarMedicos();
-    	 String cadenaMedicos = "";
-    	 //List<String> medCheck = Arrays.asList(paciente.getMedicos());
-    	 String [] medCheck = paciente.getMedicos();
-    	 for (Medico med:medcs){
-    		 System.out.print("MEDICO DNI: " + med.getDni());
-    		for (String medCh : medCheck) {
-    			System.out.print("PACIENTE MEDICOS ASOCIADOS: " + medCh );
-    			if (medCh.equalsIgnoreCase(med.getDni())) {
-    				 cadenaMedicos+="Nombre: " + med.getNombre();
-    	    		 cadenaMedicos+= "Apellido: "+ med.getApellidos();
-    	    		 cadenaMedicos += "DNI: "+ med.getDni() ;
-    	    		 cadenaMedicos += "\n";
-    			}
-    		}
-    	 }
-		panelVisualizarP.setText(cadenaMedicos);
+
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/ListaMedicos.fxml"));
+			ControladorListaMedicos ControladorListaMedicos = new ControladorListaMedicos(getPaciente());
+			loader.setController(ControladorListaMedicos);
+			Parent root = loader.load();
+			Stage stage = new Stage();
+			stage.setScene(new Scene(root));
+			stage.initModality(Modality.WINDOW_MODAL);
+			//stage.initOwner(((Node) (event.getSource())).getScene().getWindow());
+			stage.show();
+			Stage myStage = (Stage) this.botonConsultarMedico.getScene().getWindow();
+			myStage.close();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
+
+    @FXML
+    void enviarMensajeP(ActionEvent event) {
+
+    }
+    
+
+    @FXML
+    void verMensajesG(ActionEvent event) {
+
+    }
+    
+    @FXML
+    void verCitasP(ActionEvent event) {
+    	//Hacer una tabla citas
+
     }
 
     @FXML
     void visualizarDatosP(ActionEvent event) {
-       	 JsonBD ob = new JsonBD();
+       	 MariaBD ob = new MariaBD();
        	 List<Sensor> senss = ob.recuperarSensores();
        	 String cadenaSensores = "";
        	 //List<String> medCheck = Arrays.asList(paciente.getMedicos());
@@ -113,13 +139,13 @@ public class ControladorMenuPaciente {
        		 }
        		
        	}
-   		panelVisualizarP.setText(cadenaSensores);
+   		//panelVisualizarP.setText(cadenaSensores);
     }
     
     @FXML
     void salirP(ActionEvent event) {
     	try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/VentanaSalir.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/VentanaSalir2.fxml"));
 			ControladorSalir ControladorS = new ControladorSalir();
 			loader.setController(ControladorS);
 			Parent root;

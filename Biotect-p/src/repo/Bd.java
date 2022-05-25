@@ -11,13 +11,13 @@ import java.util.List;
 public interface Bd {
 
     // Añadir un nuevo consultor
-    boolean altaConsultor(Consultor consultor);
+    boolean altaConsultor(Consultor consultor, String password);
     
     //Añadir un nuevo medico
-    boolean altaMedico(Medico medico);
+    boolean altaMedico(Medico medico, String password);
 
     //Añadir un nuevo paciente
-    boolean altaPaciente(Paciente paciente);
+    boolean altaPaciente(Paciente paciente, String password);
     
     // Añadir un nuevo sensor
     boolean altaSensor(Sensor sensor);

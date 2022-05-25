@@ -17,7 +17,7 @@ public class Main extends Application {
 		//Scene scene = new Scene(root,400,400);
 		//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(getClass().getResource("/application/view/LOGIN.fxml"));
+		loader.setLocation(getClass().getResource("/application/view/VentanaLogin.fxml"));
 
 //		FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/LOGIN.fxml"));
 //			loader.setLocation(Main.class.getResource("LOGIN.fxml"));

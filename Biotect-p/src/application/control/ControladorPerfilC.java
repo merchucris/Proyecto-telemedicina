@@ -12,7 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import repo.JsonBD;
+import repo.MariaBD;
 
 
 public class ControladorPerfilC {
@@ -93,7 +93,7 @@ public class ControladorPerfilC {
     @FXML
     void mostrarPerfilC(ActionEvent event) {
       ponerDni(getCons().getDni());
-      JsonBD ob = new JsonBD();
+      MariaBD ob = new MariaBD();
       Consultor consuu = ob.recuperarConsultor(cons.getDni());
   
       miNombreC.setText(consuu.getNombre());
@@ -147,7 +147,7 @@ public class ControladorPerfilC {
     @FXML
     void botonSalir(ActionEvent event) {
     	try {
-    		FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/VentanaSalir.fxml"));
+    		FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/VentanaSalir2.fxml"));
 			ControladorSalir ControladorSalirMenu = new ControladorSalir();
 			loader.setController(ControladorSalirMenu);
 			Parent root = loader.load();

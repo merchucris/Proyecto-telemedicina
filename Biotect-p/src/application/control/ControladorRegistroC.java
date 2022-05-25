@@ -21,8 +21,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import repo.JsonBD;
-import repo.JsonBD.*;
+import repo.MariaBD;
+import repo.MariaBD.*;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
@@ -66,16 +66,8 @@ public class ControladorRegistroC {
 //    correo = miCorreoC.getText();
 //    password = miPasswordC.getText();
 
-      JsonBD ob = new JsonBD();
-
-//    Consultor cons = ob.recuperarConsultor("3333L");
-//    	
-//    miNombreC.setText(cons.getNombre());
-//    miApellidoC.setText(cons.getApellidos());
-//    miDNIC.setText(cons.getDni());
-//    miCorreoC.setText(cons.getCorreo());
-//    	Paciente p = new Paciente(dni, nombre, apellidos, correo, password, edad, sexo, medicos);
-//    	
+        MariaBD ob = new MariaBD();
+      
     	String nombre = miNombreC.getText();
     	String apellido = miApellidoC.getText();
     	String correo = miCorreoC.getText();
@@ -83,12 +75,9 @@ public class ControladorRegistroC {
     	String password = miPasswordC.getText();
     	
     	
-    	Consultor  c = new Consultor(dni, nombre, apellido, correo, password);
-    	ob.altaConsultor(c);
-    	//JsonBD ob = new JsonBD();
-    	//String json = gson.toJson(c);
-   
-    	//JsonParser parser = new JsonParser();
+    	Consultor  c = new Consultor(0, dni, nombre, apellido, correo);
+    	ob.altaConsultor(c, password);
+
 
     }
     
@@ -159,11 +148,31 @@ public class ControladorRegistroC {
 	public void setBotonVolverC(Button botonVolverC) {
 		this.botonVolverC = botonVolverC;
 	}
-
+	
+    @FXML
+    void volverL(ActionEvent event) {
+       	try {
+    			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/AdminEligeRegistro.fxml"));
+    			ControladorRegistro ControladorReg = new ControladorRegistro();
+    			loader.setController(ControladorReg);
+    			Parent root;
+    			root = loader.load();
+    			Stage stage = new Stage();
+    			stage.setScene(new Scene(root));
+    			stage.initModality(Modality.WINDOW_MODAL);
+    			//stage.initOwner(((Node) (event.getSource())).getScene().getWindow());
+    			stage.show();
+    			Stage myStage = (Stage) this.botonVolverC.getScene().getWindow();
+    			myStage.close();
+    		} catch (IOException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+    }
 	@FXML
     void botonSalir(ActionEvent event) {
     	try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/VentanaSalir.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/VentanaSalir2.fxml"));
 			ControladorSalir ControladorS = new ControladorSalir();
 			loader.setController(ControladorS);
 			Parent root;

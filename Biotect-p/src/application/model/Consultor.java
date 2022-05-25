@@ -3,12 +3,14 @@ package application.model;
 public class Consultor extends Persona {
 
 	private String usuario; //dni
-	private String password;
+	private int id_consultor;
+	
 
 
-	public Consultor(String dni, String nombre, String apellidos, String correo, String password) {
+
+	public Consultor(int id_consultor, String dni, String nombre, String apellidos, String correo) {
 		super(dni, nombre, apellidos, correo);
-		this.password = password;
+		this.id_consultor = id_consultor;
 	}
 
 	public String getUsuario() {
@@ -17,16 +19,10 @@ public class Consultor extends Persona {
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
+	
 	@Override
 	public String toString() {
 		String salida = "\n\t-usuario: " + usuario;
-		salida += "\n\t-Contrase�a: " + password;
 		return salida;
 	}
 

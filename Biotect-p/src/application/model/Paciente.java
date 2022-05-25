@@ -1,37 +1,39 @@
 package application.model;
 
+import java.util.ArrayList;
+
 public class Paciente extends Persona {
 	
 	private String usuario;
-	private String password;
-	private int edad;
+	private String fechaNac;
 	private String sexo;
-	private String[] medicos = new String[5];
+	private int id_paciente;
+	
+	private ArrayList<Medico> medicos = new ArrayList<Medico>();
     
-	public Paciente(String dni, String nombre, String apellidos, String correo, String password, int edad, String sexo, String[] medicos) {
+	public Paciente(int id_paciente, String dni, String nombre, String apellidos, String correo, String fechaNac, String sexo, String[] medicos) {
 		super(dni, nombre, apellidos, correo);
-		this.password = password;
-		System.out.print("Actualiza médicos" + this.medicos.length);
-		
+		System.out.print("Actualiza médicos" + this.medicos.size());
+		this.id_paciente = id_paciente;
+	}
+	public int getId_paciente() {
+		return id_paciente;
 	}
 
+	public void setId_paciente(int id_paciente) {
+		this.id_paciente = id_paciente;
+	}
 	public String getUsuario() {
 		return getDni();
 	}
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}
-	public String getPassword() {
-		return password;
+	public String getFechNac() {
+		return fechaNac;
 	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	public int getEdad() {
-		return edad;
-	}
-	public void setEdad(int edad) {
-		this.edad = edad;
+	public void setEdad(String fechaNac) {
+		this.fechaNac = fechaNac;
 	}
 	public String getSexo() {
 		return sexo;
@@ -40,18 +42,17 @@ public class Paciente extends Persona {
 	
 		this.sexo = sexo;
 	}
-	public String[] getMedicos() {
-		return medicos;
+	public ArrayList<Medico> getMedicos() {
+		return this.medicos;
 	}
-	public void setMedicos (String [] medicos) {
-		System.out.print("Actualiza médicos" + medicos.length);
+	public void setMedicos (ArrayList<Medico> medicos) {
+		System.out.print("Actualiza médicos" + medicos.size());
 		this.medicos = medicos;
 	}
 
 	@Override
 	public String toString() {
 		String salida = "\n\t-usuario: " + usuario;
-		salida += "\n\t-Contrase�a: " + password;
 		return salida;
 	}
 }

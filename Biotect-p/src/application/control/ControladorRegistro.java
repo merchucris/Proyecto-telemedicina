@@ -1,5 +1,7 @@
 package application.control;
 
+import java.io.IOException;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,9 +15,6 @@ import javafx.stage.Stage;
 public class ControladorRegistro {
 
     @FXML
-    private Button esBotonPaciente;
-
-    @FXML
     private Button esBotonMedico;
 
     @FXML
@@ -23,13 +22,17 @@ public class ControladorRegistro {
 
     @FXML
     private Button botonSalir;
+    
+    @FXML
+    private Button BotonVolverALogin;
+
 
     @FXML
     void abrirRegistroC(ActionEvent event) {
 
     	try {
 
-        	FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/RegistroConsultor.fxml"));
+        	FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/RegistroConsult.fxml"));
 
         	ControladorRegistroC controladorRegistroC = new ControladorRegistroC();
 
@@ -58,22 +61,16 @@ public class ControladorRegistro {
     void abrirRegistroM(ActionEvent event) {
     	try {
 
-        	FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/RegistroMedico.fxml"));
-
+        	FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/RegistroMedic.fxml"));
+        	
     		ControladorRegistroM ControladorRegistroM = new ControladorRegistroM();
-
+    		
     		loader.setController(ControladorRegistroM);
-
+    		
     		Parent root = loader.load();
-
-    	//	ControlMenu.verTexto(user);;
-
+    		
     		Stage stage = new Stage();
-
     		stage.setScene(new Scene(root));
-
-    		//stage.initModality(Modality.WINDOW_MODAL);
-    		//stage.initOwner(((Node) (event.getSource())).getScene().getWindow());
     		stage.show();
     		// Se cierra la ventana anterior al entrar
     		Stage myStage = (Stage) this.esBotonMedico.getScene().getWindow();
@@ -86,41 +83,50 @@ public class ControladorRegistro {
     }
 
     @FXML
-    void abrirRegistroP(ActionEvent event) {
+    void volverL(ActionEvent event) {
     	try {
-
-        	FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/RegistroPaciente.fxml"));
-
-    		ControladorRegistroP ControladorRegistroP = new ControladorRegistroP();
-
-    		loader.setController(ControladorRegistroP);
-
-    		Parent root = loader.load();
-
-    	//	ControlMenu.verTexto(user);;
-
-    		Stage stage = new Stage();
-
-    		stage.setScene(new Scene(root));
-
-    		//stage.initModality(Modality.WINDOW_MODAL);
-    		//stage.initOwner(((Node) (event.getSource())).getScene().getWindow());
-
-    		stage.show();
-    		
-    		Stage myStage = (Stage) this.esBotonPaciente.getScene().getWindow();
-    		myStage.close();
-
-	  } catch(Exception e) {
-		e.printStackTrace();
-	  }
+    		FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/VentanaLogin.fxml"));
+    		ControladorLogin ControladorLogin = new ControladorLogin();
+			loader.setController(ControladorLogin);
+			Parent root = loader.load();
+			Stage stage = new Stage();
+			stage.setScene(new Scene(root));
+			stage.initModality(Modality.WINDOW_MODAL);
+			//stage.initOwner(((Node) (event.getSource())).getScene().getWindow());
+			stage.show();
+			Stage myStage = (Stage) this.BotonVolverALogin.getScene().getWindow();
+			myStage.close();
+    	    
+    		} catch (IOException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
     }
-
+    
     @FXML
     void salir(ActionEvent event) {
-    	System.exit(0);
+    	
+    	try {
+    		FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/VentanaSalir2.fxml"));
+    		ControladorSalir ControladorSali = new ControladorSalir();
+			loader.setController(ControladorSali);
+			Parent root = loader.load();
+			Stage stage = new Stage();
+			stage.setScene(new Scene(root));
+			stage.initModality(Modality.WINDOW_MODAL);
+			//stage.initOwner(((Node) (event.getSource())).getScene().getWindow());
+			stage.show();
+			Stage myStage = (Stage) this.botonSalir.getScene().getWindow();
+			myStage.close();
+    	    
+    		} catch (IOException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+    	//System.exit(0);
 
     }
+    
 
 
 }

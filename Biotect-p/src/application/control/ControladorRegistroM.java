@@ -13,7 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import repo.JsonBD;
+import repo.MariaBD;
 
 public class ControladorRegistroM {
 
@@ -38,11 +38,15 @@ public class ControladorRegistroM {
     private Button botonCrearM;
     
 
+    @FXML
+    private Button BotonVolverALogin;
+    
+
 
     @FXML
     void crearMedico(ActionEvent event) {
 
-        JsonBD ob = new JsonBD();
+        MariaBD ob = new MariaBD();
         
     	String nombre = miNombreM.getText();
     	String apellido = miApellidoM.getText();
@@ -50,19 +54,40 @@ public class ControladorRegistroM {
     	String dni = miDNIM.getText();
     	String password = miPasswordM.getText();
     	
+    	Medico  m = new Medico(0,dni, nombre, apellido, correo);
     	
-    	Medico  m = new Medico(dni, nombre, apellido, correo, password);
-    	ob.altaMedico(m);
+    	ob.altaMedico(m, password);
+    }
+    
+    @FXML
+    void volverL(ActionEvent event) {
+       	try {
+    			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/AdminEligeRegistro.fxml"));
+    			ControladorRegistro ControladorReg = new ControladorRegistro();
+    			loader.setController(ControladorReg);
+    			Parent root;
+    			root = loader.load();
+    			Stage stage = new Stage();
+    			stage.setScene(new Scene(root));
+    			stage.initModality(Modality.WINDOW_MODAL);
+    			//stage.initOwner(((Node) (event.getSource())).getScene().getWindow());
+    			stage.show();
+    			Stage myStage = (Stage) this.BotonVolverALogin.getScene().getWindow();
+    			myStage.close();
+    		} catch (IOException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
     }
 
     @FXML
     void salirM(ActionEvent event) {
+    	
     	try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/VentanaSalir.fxml"));
-			ControladorSalir ControladorS = new ControladorSalir();
-			loader.setController(ControladorS);
-			Parent root;
-			root = loader.load();
+    		FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/VentanaSalir2.fxml"));
+    		ControladorSalir ControladorSalir = new ControladorSalir();
+			loader.setController(ControladorSalir);
+			Parent root = loader.load();
 			Stage stage = new Stage();
 			stage.setScene(new Scene(root));
 			stage.initModality(Modality.WINDOW_MODAL);
@@ -70,10 +95,11 @@ public class ControladorRegistroM {
 			stage.show();
 			Stage myStage = (Stage) this.botonSalir.getScene().getWindow();
 			myStage.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    	    
+    		} catch (IOException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
 
     }
 

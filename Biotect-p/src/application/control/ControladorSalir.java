@@ -29,7 +29,7 @@ public class ControladorSalir {
     void volverAEntrar(ActionEvent event) {
     	
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/LOGIN.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/VentanaLogin.fxml"));
 			ControladorLogin ControladorLogin = new ControladorLogin();
 			loader.setController(ControladorLogin);
 			Parent root;
@@ -39,7 +39,7 @@ public class ControladorSalir {
 			stage.initModality(Modality.WINDOW_MODAL);
 			//stage.initOwner(((Node) (event.getSource())).getScene().getWindow());
 			stage.show();
-			Stage myStage = (Stage) this.botonSalir.getScene().getWindow();
+			Stage myStage = (Stage) this.botonSalirFinal.getScene().getWindow();
 			myStage.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

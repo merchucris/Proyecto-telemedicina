@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane layoutX="-99.0" layoutY="-153.0" prefHeight="600.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <children>
+            <SplitPane dividerPositions="0.16220735785953178" layoutX="10.0" layoutY="10.0" orientation="VERTICAL" prefHeight="150.0" prefWidth="426.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <items>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="96.0" prefWidth="698.0" style="-fx-background-color: f5f2e8;">
+                     <children>
+                        <ImageView fitHeight="83.0" fitWidth="200.0" layoutX="32.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../../Downloads/Logo%20(1)%20(1)/Standard%20Logo%20Files/Original%20on%20Transparent.png" />
+                           </image>
+                        </ImageView>
+                        <Button fx:id="botonSalirM" layoutX="506.0" layoutY="42.0" mnemonicParsing="false" onAction="#salirM" prefHeight="46.0" prefWidth="134.0" style="-fx-background-color: transparent;" text="Salir" underline="true">
+                           <font>
+                              <Font name="Times New Roman" size="18.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="473.0" prefWidth="698.0" style="-fx-background-color: e7e4db;">
+                     <children>
+                        <Pane layoutX="32.0" layoutY="14.0" prefHeight="150.0" prefWidth="180.0" style="-fx-background-color: cbeff9;" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="20.0">
+                           <children>
+                              <Text layoutX="33.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Estado paciente">
+                                 <font>
+                                    <Font name="Times New Roman Bold" size="18.0" />
+                                 </font>
+                              </Text>
+                              <JFXTextArea fx:id="panelVisualizarEstadoM" layoutX="21.0" layoutY="53.0" prefHeight="84.0" prefWidth="145.0" />
+                           </children></Pane>
+                        <Pane layoutX="250.0" layoutY="20.0" prefHeight="150.0" prefWidth="180.0" style="-fx-background-color: white;" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="20.0">
+                           <children>
+                              <Text layoutX="36.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Buzón mensajes">
+                                 <font>
+                                    <Font name="Times New Roman Bold" size="18.0" />
+                                 </font></Text>
+                              <Button fx:id="botonMensajes" layoutX="22.0" layoutY="52.0" mnemonicParsing="false" onAction="#verMensajes" prefHeight="25.0" prefWidth="155.0" style="-fx-background-color: cbeff9;" text="Recibidos">
+                                 <font>
+                                    <Font name="Times New Roman Bold" size="18.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="botonEnviarMensaje" layoutX="22.0" layoutY="96.0" mnemonicParsing="false" onAction="#enviarMensaje" prefHeight="25.0" prefWidth="155.0" style="-fx-background-color: cbeff9;" text="Enviar mensaje">
+                                 <font>
+                                    <Font name="Times New Roman Bold" size="18.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </Pane>
+                        <Pane layoutX="30.0" layoutY="306.0" prefHeight="75.0" prefWidth="180.0" style="-fx-background-color: white;">
+                           <children>
+                              <Button fx:id="botonCitasM" layoutX="13.0" layoutY="11.0" mnemonicParsing="false" onAction="#verCitasM" prefHeight="54.0" prefWidth="155.0" style="-fx-background-color: cbeff9;" text="Mis Consultas">
+                                 <font>
+                                    <Font name="Times New Roman Bold" size="18.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </Pane>
+                        <Pane layoutX="255.0" layoutY="207.0" prefHeight="272.0" prefWidth="414.0" style="-fx-background-color: cbeff9;" AnchorPane.rightAnchor="30.0">
+                           <children>
+                              <Text layoutX="36.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Consultar paciente">
+                                 <font>
+                                    <Font name="Times New Roman Bold" size="18.0" />
+                                 </font></Text>
+                              <Button fx:id="botonBuscarP" layoutX="338.0" layoutY="55.0" mnemonicParsing="false" onAction="#buscarPaciente" text="Go" />
+                              <TextField fx:id="botonDniPaciente" layoutX="198.0" layoutY="55.0" prefHeight="25.0" prefWidth="114.0" />
+                              <Text layoutX="52.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Escriba DNI del paciente">
+                                 <font>
+                                    <Font name="Times New Roman" size="14.0" />
+                                 </font></Text>
+                              <TextField fx:id="botonCorreoP" layoutX="150.0" layoutY="155.0" prefHeight="25.0" prefWidth="162.0" />
+                              <TextField fx:id="botonNombreP" layoutX="150.0" layoutY="125.0" prefHeight="25.0" prefWidth="162.0" />
+                              <Text layoutX="43.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre completo">
+                                 <font>
+                                    <Font name="Times New Roman" size="14.0" />
+                                 </font></Text>
+                              <Text layoutX="41.0" layoutY="171.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Correo electrónico">
+                                 <font>
+                                    <Font name="Times New Roman" size="14.0" />
+                                 </font></Text>
+                              <TextField fx:id="botonSexoP" layoutX="150.0" layoutY="216.0" prefHeight="25.0" prefWidth="162.0" />
+                              <TextField fx:id="BotonEstadoP" layoutX="150.0" layoutY="186.0" prefHeight="25.0" prefWidth="162.0" />
+                              <Text layoutX="39.0" layoutY="202.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Estado del paciente">
+                                 <font>
+                                    <Font name="Times New Roman" size="14.0" />
+                                 </font></Text>
+                              <Text layoutX="116.0" layoutY="233.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sexo">
+                                 <font>
+                                    <Font name="Times New Roman" size="14.0" />
+                                 </font></Text>
+                           </children>
+                        </Pane>
+                        <Pane layoutX="494.0" layoutY="20.0" prefHeight="150.0" prefWidth="180.0" style="-fx-background-color: white;" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="20.0">
+                           <children>
+                              <ImageView fitHeight="122.0" fitWidth="163.0" layoutX="41.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../../../../Downloads/medico.png" />
+                                 </image></ImageView>
+                           </children>
+                        </Pane>
+                        <Pane layoutX="30.0" layoutY="207.0" prefHeight="75.0" prefWidth="180.0" style="-fx-background-color: white;">
+                           <children>
+                              <Button fx:id="botonPerfilM" layoutX="13.0" layoutY="11.0" mnemonicParsing="false" onAction="#verPerfilM" prefHeight="54.0" prefWidth="155.0" style="-fx-background-color: cbeff9;" text="Mi Perfil">
+                                 <font>
+                                    <Font name="Times New Roman Bold" size="18.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </Pane>
+                        <Pane layoutX="30.0" layoutY="404.0" prefHeight="75.0" prefWidth="180.0" style="-fx-background-color: white;">
+                           <children>
+                              <Button fx:id="botonConsultarPaciente" layoutX="13.0" layoutY="11.0" mnemonicParsing="false" onAction="#consultarPaciente" prefHeight="54.0" prefWidth="155.0" style="-fx-background-color: cbeff9;" text="Mis pacientes">
+                                 <font>
+                                    <Font name="Times New Roman Bold" size="18.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+               </items>
+            </SplitPane>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

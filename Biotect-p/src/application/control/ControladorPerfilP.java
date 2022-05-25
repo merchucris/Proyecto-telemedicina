@@ -1,6 +1,12 @@
 package application.control;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import application.model.Consultor;
 import application.model.Paciente;
@@ -13,7 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import repo.JsonBD;
+import repo.MariaBD;
 
 public class ControladorPerfilP {
 
@@ -85,12 +91,15 @@ public class ControladorPerfilP {
 	public void setMiCorreoP(String correo) {
 		this.botonCorreoP.setText(correo);
 	}
-
+	
+    private String BBDDName = "prbbiotect";
+    static final String USER = "prb_biotect";
+    static final String PASS = "biotect123";
+    
     @FXML
     void mostrarPerfilP(ActionEvent event) {
-    	 //ponerDni(getPacs().getDni());
     	 System.out.print("PACIENTE DNI: " + this.pacnts.getDni());
-         JsonBD ob = new JsonBD();
+         MariaBD ob = new MariaBD();
          Paciente pacie = ob.recuperarPaciente(this.pacnts.getDni());
      
          botonNombreP.setText(pacie.getNombre());
@@ -99,11 +108,12 @@ public class ControladorPerfilP {
          botonCorreoP.setText(pacie.getCorreo());
      }
 
+
     @FXML
     void volverMenuP(ActionEvent event) {
     	
     	try {
-    		FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/MenuPaciente.fxml"));
+    		FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/MenuP2.fxml"));
     		ControladorMenuPaciente ControladorMenuPaciente = new ControladorMenuPaciente(this.pacnts);
 			loader.setController(ControladorMenuPaciente);
 			Parent root = loader.load();
@@ -125,7 +135,7 @@ public class ControladorPerfilP {
     void SalirP(ActionEvent event) {
     	
     	try {
-    		FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/VentanaSalir.fxml"));
+    		FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/VentanaSalir2.fxml"));
 			ControladorSalir ControladorSalirMenu = new ControladorSalir();
 			loader.setController(ControladorSalirMenu);
 			Parent root = loader.load();

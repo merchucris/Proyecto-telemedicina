@@ -13,5 +13,6 @@
 	<classpathentry kind="lib" path="Lib/jfoenix-8.0.8.jar"/>
 	<classpathentry kind="lib" path="Lib/gson-2.8.6.jar"/>
 	<classpathentry kind="lib" path="Lib/sqlite-jdbc-3.25.2.jar"/>
+	<classpathentry kind="lib" path="src/repo/mariadb-java-client-2.6.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

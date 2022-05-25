@@ -1,20 +1,26 @@
 package application.control;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
-import application.model.Consultor;
+import com.jfoenix.controls.JFXComboBox;
+
 import application.model.Medico;
 import application.model.Paciente;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import repo.JsonBD;
+import repo.MariaBD;
 
 public class ControladorRegistroP {
 	private boolean esModificar = false;
@@ -31,7 +37,7 @@ public class ControladorRegistroP {
     private TextField botonDNIP;
 
     @FXML
-    private TextField botonEdadP;
+    private DatePicker botonFechaNacP;
 
     @FXML
     private TextField botonCorreoP;
@@ -40,7 +46,7 @@ public class ControladorRegistroP {
     private TextField botonDNImedicoP;
 
     @FXML
-    private TextField botonSexoP;
+    private JFXComboBox<String> botonSexoP;
 
     @FXML
     private Button botonCrearP;
@@ -63,11 +69,21 @@ public class ControladorRegistroP {
     @FXML
     private TextField botonDNImedicoP3;
 
+    @FXML
+    private Button BotonVolverALogin;
+    ObservableList<String> listSex = FXCollections.observableArrayList(
+            "Masculino", "Femenino");
+	@FXML
+    public void initialize() {
+		botonSexoP.setItems(listSex);
+  
+    	
+    }
 
     @FXML
     void buscarDNI(ActionEvent event) {
     	
-          JsonBD ob = new JsonBD();
+          MariaBD ob = new MariaBD();
           Paciente paciee = ob.recuperarPaciente(textoBuscarDNIP.getText());
       
 //          miNombreP.setText(paciee.getNombre());
@@ -77,32 +93,28 @@ public class ControladorRegistroP {
            botonNombreP.setText(paciee.getNombre());
            botonApellidoP.setText(paciee.getApellidos());
            botonDNIP.setText(paciee.getDni());
-           String med []= paciee.getMedicos();
-           if (med.length >0) {
+           ArrayList<Medico> med = paciee.getMedicos();
+           if (med.size() >0) {
 
-               botonDNImedicoP.setText(paciee.getMedicos()[0]);
+               botonDNImedicoP.setText(med.get(0).getNombre());
            }
-           if (med.length >1) {
+           if (med.size() >1) {
 
-        	   botonDNImedicoP1.setText(paciee.getMedicos()[1]);
+        	   botonDNImedicoP1.setText(med.get(1).getNombre());
            }
-           if (med.length >2) {
+           if (med.size() >2) {
 
-        	   botonDNImedicoP2.setText(paciee.getMedicos()[2]);
+        	   botonDNImedicoP2.setText(med.get(2).getNombre());
            }
-           if (med.length >3) {
+           if (med.size() >3) {
 
-        	   botonDNImedicoP3.setText(paciee.getMedicos()[3]);
+        	   botonDNImedicoP3.setText(med.get(3).getNombre());
            }
-
-          
-
-
            
            botonCorreoP.setText(paciee.getCorreo());
-           botonPasswordP.setText(paciee.getPassword());
-           botonEdadP.setText(Integer.toString(paciee.getEdad()));
-           botonSexoP.setText(paciee.getSexo());
+           botonFechaNacP.setPromptText(paciee.getFechNac());
+           //botonEdadP.setText(Integer.toString(paciee.getEdad()));
+           botonSexoP.setPromptText(paciee.getSexo());
            botonCrearP.setText("Modificar");
            this.esModificar = true;
     }
@@ -110,21 +122,22 @@ public class ControladorRegistroP {
     @FXML
     void crearPaciente(ActionEvent event) {
     	
-    	  JsonBD ob = new JsonBD();
+    	  MariaBD ob = new MariaBD();
     	  try {
 	    	  String dni = this.botonDNIP.getText();
 		 	  String nombre = this.botonNombreP.getText();
 		 	  String apellidos = this.botonApellidoP.getText();
 		 	  String correo = this.botonCorreoP.getText();
-		 	  String password = this.botonPasswordP.getText();
-		 	  int edad = Integer.parseInt(botonEdadP.getText());
-		 	  String sexo = this.botonSexoP.getText();
+		 	  String fechNac = this.botonFechaNacP.getPromptText();
+		 	  //int edad = Integer.parseInt(botonEdadP.getText());
+		 	  String sexo = this.botonSexoP.getPromptText();
 		 	  String[] medicos = new String[4];
 		 	  medicos[0] = botonDNImedicoP.getText();
 		 	  medicos[1] = botonDNImedicoP1.getText();
 		 	  medicos[2] = botonDNImedicoP2.getText();
 		 	  medicos[3] = botonDNImedicoP3.getText();
-		 	 Paciente p = new Paciente(dni, nombre, apellidos, correo, password, edad, sexo,medicos);
+		 	  String password = botonPasswordP.getText();
+		 	 Paciente p = new Paciente(0,dni, nombre, apellidos, correo, fechNac, sexo, medicos);
 		 	    // Paciente paci = ob.recuperarPaciente("");
 			  if ( this.esModificar == true) {
 				  // Moificar un paciente
@@ -132,7 +145,7 @@ public class ControladorRegistroP {
 			  }else {
 				  // Crear un Paciente
 				 	 
-				 	  ob.altaPaciente(p);	 	  
+				 	  ob.altaPaciente(p,password);	 	  
 			  }
     	  }catch(NumberFormatException e1) {
     		  System.out.println("No se pudo modificar paciente. La edad es obligatoria y debe ser un numero");
@@ -157,9 +170,31 @@ public class ControladorRegistroP {
     }
 
     @FXML
+    void volverL(ActionEvent event) {
+    	try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/VentanaLogin.fxml"));
+			ControladorLogin ControladorLog = new ControladorLogin();
+			loader.setController(ControladorLog);
+			Parent root;
+			root = loader.load();
+			Stage stage = new Stage();
+			stage.setScene(new Scene(root));
+			stage.initModality(Modality.WINDOW_MODAL);
+			//stage.initOwner(((Node) (event.getSource())).getScene().getWindow());
+			stage.show();
+			Stage myStage = (Stage) this.botonSalir.getScene().getWindow();
+			myStage.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+    }
+    
+    @FXML
     void salirP(ActionEvent event) {
     	try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/VentanaSalir.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/VentanaSalir2.fxml"));
 			ControladorSalir ControladorS = new ControladorSalir();
 			loader.setController(ControladorS);
 			Parent root;

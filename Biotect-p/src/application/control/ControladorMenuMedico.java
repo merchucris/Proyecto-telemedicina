@@ -1,6 +1,7 @@
 package application.control;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,9 +17,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import repo.JsonBD;
+import repo.MariaBD;
 
 public class ControladorMenuMedico {
 
@@ -35,8 +37,8 @@ public class ControladorMenuMedico {
 	}
 
 	
-    @FXML
-    private JFXTextArea panelVisualizarM;
+    // @FXML
+   // private JFXTextArea panelVisualizarM;
 
     @FXML
     private Button botonPerfilM;
@@ -45,18 +47,40 @@ public class ControladorMenuMedico {
     private Button botonConsultarPaciente;
 
     @FXML
-    private Button botonVerDatosP;
+    private Button botonVerDatosM;
 
     @FXML
-    private Button Citas;
+    private Button botonCitasM;
 
     @FXML
     private Button botonSalirM;
 
     @FXML
+    private Button botonMensajes;
+
+    @FXML
+    private Button botonEnviarMensaje;
+    
+    @FXML
+    private TextField botonDniPaciente;
+
+    @FXML
+    private TextField botonCorreoP;
+
+    @FXML
+    private TextField botonNombreP;
+
+    @FXML
+    private TextField botonSexoP;
+
+    @FXML
+    private TextField BotonEstadoP;
+
+
+    @FXML
     void verPerfilM(ActionEvent event) {
     	try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/PerfilMedico.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/PerfilMedic.fxml"));
 			ControladorPerfilM ControladorPerfilMedico = new ControladorPerfilM(getMedico());
 			loader.setController(ControladorPerfilMedico);
 			Parent root = loader.load();
@@ -74,36 +98,113 @@ public class ControladorMenuMedico {
 		}
     }
     
+//    @FXML
+//    void verListaPacientes(ActionEvent event) {
+//   	     MariaBD ob = new MariaBD();
+//   	     List<Paciente> pacs = ob.recuperarPacientes();
+//   	     String cadenaPacientes = "";
+//   	     //List<String> pacCheck = Arrays.asList(medico.getPacientes());
+//   	    
+//   	     for (Paciente pac:pacs){
+//   	    	 
+//   		    System.out.print("PACIENTE DNI: " + pac.getDni());
+//   		    ArrayList<Medico> pacCheck = pac.getMedicos();
+//   		    if (pacCheck.size()>0) {
+//   		    System.out.print(pacCheck.size());
+//   		     for (Medico pacCh : pacCheck) {
+//    		    	System.out.print("MEDICOS PACIENTES ASOCIADOS: " + pacCh );
+//    			    if (pacCh.getDni().equalsIgnoreCase(medico.getDni())) {
+//    				    cadenaPacientes+="Nombre: " + pac.getNombre();
+//    				    cadenaPacientes+= "Apellido: "+ pac.getApellidos();
+//    				    cadenaPacientes += "DNI: "+ pac.getDni() ;
+//    				    cadenaPacientes += "\n";
+//    			    }
+//    		    }
+//   		    }
+//   	     }
+		//panelVisualizarM.setText(cadenaPacientes);
+//    }
+    
     @FXML
-    void verListaPacientes(ActionEvent event) {
-   	     JsonBD ob = new JsonBD();
-   	     List<Paciente> pacs = ob.recuperarPacientes();
-   	     String cadenaPacientes = "";
-   	     //List<String> pacCheck = Arrays.asList(medico.getPacientes());
-   	    
-   	     for (Paciente pac:pacs){
-   	    	 
-   		    System.out.print("PACIENTE DNI: " + pac.getDni());
-   		    String [] pacCheck = pac.getMedicos();
-   		    if (pacCheck.length>0) {
-   		    System.out.print(pacCheck.length);
-   		     for (String pacCh : pacCheck) {
-    		    	System.out.print("MEDICOS PACIENTES ASOCIADOS: " + pacCh );
-    			    if (pacCh.equalsIgnoreCase(medico.getDni())) {
-    				    cadenaPacientes+="Nombre: " + pac.getNombre();
-    				    cadenaPacientes+= "Apellido: "+ pac.getApellidos();
-    				    cadenaPacientes += "DNI: "+ pac.getDni() ;
-    				    cadenaPacientes += "\n";
-    			    }
-    		    }
-   		    }
-   	     }
-		panelVisualizarM.setText(cadenaPacientes);
+    void buscarPaciente(ActionEvent event) {
+    	
+    	//COMO EN EL REGISTRO DEL PACIENTE
+    	
+    	
+        MariaBD ob = new MariaBD();
+        Paciente paciee = ob.recuperarPaciente(botonDniPaciente.getText());
+    
+         botonNombreP.setText(paciee.getNombre());      
+         botonCorreoP.setText(paciee.getCorreo());
+         //botonEdadP.setText(Integer.toString(paciee.getEdad()));
+         botonSexoP.setPromptText(paciee.getSexo());
+
+  }
+
+    
+    @FXML
+    void consultarPaciente(ActionEvent event) {
+  	     try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/ListaPacientes.fxml"));
+			ControladorListaPacientes ControladorListaPacient = new ControladorListaPacientes(getMedico());
+			//ControladorListaPacientes ControladorListaPacient = new ControladorListaPacientes(getMedico());
+			loader.setController(ControladorListaPacient);
+			Parent root = loader.load();
+			Stage stage = new Stage();
+			stage.setScene(new Scene(root));
+			stage.initModality(Modality.WINDOW_MODAL);
+			//stage.initOwner(((Node) (event.getSource())).getScene().getWindow());
+			stage.show();
+			Stage myStage = (Stage) this.botonConsultarPaciente.getScene().getWindow();
+			myStage.close();
+			
+		  } catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+    }
+
+    
+
+    @FXML
+    void verCitasM(ActionEvent event) {
+
+    }
+
+    @FXML
+    void verMensajes(ActionEvent event) {
+    	
+    	
+
+    }
+    
+    @FXML
+    void enviarMensaje(ActionEvent event) {
+    	
+    	try {
+    		FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/vistaEnviarMensaje.fxml"));
+    		ControladorEnviarMensaje ControladorMensaj = new ControladorEnviarMensaje();
+			loader.setController(ControladorMensaj);
+			Parent root = loader.load();
+			Stage stage = new Stage();
+			stage.setScene(new Scene(root));
+			stage.initModality(Modality.WINDOW_MODAL);
+			//stage.initOwner(((Node) (event.getSource())).getScene().getWindow());
+			stage.show();
+			Stage myStage = (Stage) this.botonMensajes.getScene().getWindow();
+			myStage.close();
+    	    
+    		} catch (IOException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+
     }
 
     @FXML
     void visualizarDatos(ActionEvent event) {
-      	 JsonBD ob = new JsonBD();
+      	 MariaBD ob = new MariaBD();
       	 List<Sensor> senss = ob.recuperarSensores();
       	 List<Paciente> pacs = ob.recuperarPacientes();
       	 String cadenaSensores = "";
@@ -125,13 +226,13 @@ public class ControladorMenuMedico {
       		
       		
       	}
-      	panelVisualizarM.setText(cadenaSensores);
+      	//panelVisualizarM.setText(cadenaSensores);
     }
     
     @FXML
     void salirM(ActionEvent event) {
     	try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/VentanaSalir.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/VentanaSalir2.fxml"));
 			ControladorSalir ControladorS = new ControladorSalir();
 			loader.setController(ControladorS);
 			Parent root;

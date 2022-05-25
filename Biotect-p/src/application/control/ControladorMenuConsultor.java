@@ -17,7 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import repo.JsonBD;
+import repo.MariaBD;
 
 public class ControladorMenuConsultor {
 
@@ -48,9 +48,10 @@ public class ControladorMenuConsultor {
 
     @FXML
     void verPerfilC(ActionEvent event) {
+    	MariaBD bbdd = new MariaBD();
     	try {
     		System.out.println("----*****--0");
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/PerfilConsultor.fxml"));  // RegistroConsultor.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/PerfilConsult.fxml"));  // RegistroConsultor.fxml"));
 			System.out.println("----*****--00");
 			ControladorPerfilC controladorPerfilC = new ControladorPerfilC(getConsultor());
 			System.out.println("----*****--000");
@@ -79,7 +80,7 @@ public class ControladorMenuConsultor {
 
     @FXML
     void abrirLista(ActionEvent event) {
-    	JsonBD ob = new JsonBD();
+    	MariaBD ob = new MariaBD();
     	List<Consultor> listaConsultores = ob.recuperarListaConsultores();
     	//reiterar la lista for each
     	for (Consultor consultor :  listaConsultores) {
@@ -93,7 +94,7 @@ public class ControladorMenuConsultor {
 
     @FXML
     void verDatosSensoresC(ActionEvent event) {
-   	 JsonBD ob = new JsonBD();
+   	 MariaBD ob = new MariaBD();
   	 List<Sensor> senss = ob.recuperarSensores();
   	 String cadenaSensores = "";
   	 //List<String> medCheck = Arrays.asList(paciente.getMedicos());
@@ -111,7 +112,7 @@ public class ControladorMenuConsultor {
 
     @FXML
     void verListaPacientes(ActionEvent event) {
-      	 JsonBD ob = new JsonBD();
+      	 MariaBD ob = new MariaBD();
       	 List<Paciente> pacs = ob.recuperarPacientes();
       	 String cadenaPacientes = "";
       	 //List<String> medCheck = Arrays.asList(paciente.getMedicos());
@@ -128,7 +129,7 @@ public class ControladorMenuConsultor {
     @FXML
     void salirC(ActionEvent event) {
     	try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/VentanaSalir.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/VentanaSalir2.fxml"));
 			ControladorSalir ControladorS = new ControladorSalir();
 			loader.setController(ControladorS);
 			Parent root;
@@ -145,9 +146,7 @@ public class ControladorMenuConsultor {
 		}
     }
 
-//    JsonBD ob = new JsonBD();
-//
-//    Consultor cons = ob.recuperarConsultor("3333L");
+
     	
 //    miNombreC.setText(this.consultor.getNombre());
 //    miApellidoC.setText(cons.getApellidos());

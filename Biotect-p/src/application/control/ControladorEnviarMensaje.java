@@ -2,7 +2,6 @@ package application.control;
 
 import java.io.IOException;
 
-import application.model.Consultor;
 import application.model.Medico;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,33 +9,30 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import repo.MariaBD;
 
-public class ControladorPerfilM {
-
-    @FXML
-    private TextField miNombreM;
-
-    @FXML
-    private TextField miApellidoM;
-
-    @FXML
-    private TextField miDNIM;
-
-    @FXML
-    private TextField miCorreoM;
-    
-    @FXML
-    private Button botonMostrarM;
-
-    @FXML
-    private Button botonVolverM;
+public class ControladorEnviarMensaje {
 
     @FXML
     private Button botonSalir;
+
+    @FXML
+    private Button BotonVolverALogin;
+
+    @FXML
+    private Button botonEnviarMensaje;
+
+    @FXML
+    private TextField dniDdestinatatio;
+
+    @FXML
+    private TextField asuntoDestinatario;
+
+    @FXML
+    private TextArea mensajeEnviar;
     
     private Medico meds;
 	
@@ -48,49 +44,15 @@ public class ControladorPerfilM {
 	public void setMeds(Medico medic) {
 		this.meds = medic;
 	}
-	 public void ponerDni(String dni) {
-	    miDNIM.setText(meds.getDni());
-	 }
-
-	public TextField getMiNombreM() {
-		return miNombreM;
-	}
-    
-	public ControladorPerfilM(Medico meds) {
-		super();
-		this.meds = meds;
-	}
 	
-	public void setMiNombreM(TextField miNombreM) {
-		this.miNombreM = miNombreM;
-	}
-	
-	public void setMiNombreC(String nombre) {
-		System.out.println("**00003**");
-		this.miNombreM.setText(nombre);
-	}
-	public void setMiApellidoC(String apellidos) {
-		this.miApellidoM.setText(apellidos);
-	}
-	public void setMiCorreoC(String correo) {
-		this.miCorreoM.setText(correo);
-	}
-    
     @FXML
-    void mostrarPerfilM(ActionEvent event) {
-      ponerDni(getMeds().getDni());
-      MariaBD ob = new MariaBD();
-      Medico medcs = ob.recuperarMedico(meds.getDni());
-  
-      miNombreM.setText(medcs.getNombre());
-      miApellidoM.setText(medcs.getApellidos());
-      miDNIM.setText(medcs.getDni());
-      miCorreoM.setText(medcs.getCorreo());
+    void enviarMensaje(ActionEvent event) {
+
     }
-	
-    @FXML
-    void volverMenuM(ActionEvent event) {
 
+    @FXML
+    void volverL(ActionEvent event) {
+    	
     	try {
     		FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/MenuM.fxml"));
     		ControladorMenuMedico ControladorMenuMedico = new ControladorMenuMedico(this.meds);
@@ -101,7 +63,7 @@ public class ControladorPerfilM {
 			stage.initModality(Modality.WINDOW_MODAL);
 			//stage.initOwner(((Node) (event.getSource())).getScene().getWindow());
 			stage.show();
-			Stage myStage = (Stage) this.botonVolverM.getScene().getWindow();
+			Stage myStage = (Stage) this.BotonVolverALogin.getScene().getWindow();
 			myStage.close();
     	    
     		} catch (IOException e) {
@@ -110,9 +72,10 @@ public class ControladorPerfilM {
     		}
 
     }
-	
+    
     @FXML
-    void salirM(ActionEvent event) {
+    void botonSalir(ActionEvent event) {
+    	
     	try {
     		FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/VentanaSalir2.fxml"));
 			ControladorSalir ControladorSalirMenu = new ControladorSalir();
@@ -130,6 +93,7 @@ public class ControladorPerfilM {
     			// TODO Auto-generated catch block
     			e.printStackTrace();
             }
+    	
     }
 
-}
+    }
