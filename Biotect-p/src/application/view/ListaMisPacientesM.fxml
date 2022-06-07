@@ -27,7 +27,7 @@
                               <Image url="@../../../../../../Downloads/Logo%20(1)%20(1)/Standard%20Logo%20Files/Original%20on%20Transparent.png" />
                            </image>
                         </ImageView>
-                        <Button layoutX="444.0" layoutY="21.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="134.0" style="-fx-background-color: transparent;" text="Salir" underline="true">
+                        <Button fx:id="botonVolverMenuM" layoutX="444.0" layoutY="21.0" mnemonicParsing="false" onAction="#volverVentanaMenuM" prefHeight="46.0" prefWidth="134.0" style="-fx-background-color: transparent;" text="Volver" underline="true">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -38,9 +38,9 @@
                      <children>
                         <Pane layoutX="33.0" layoutY="14.0" prefHeight="254.0" prefWidth="519.0" style="-fx-background-color: cbeff9;">
                            <children>
-                              <Text layoutX="36.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mis médicos" />
-                              <TextArea fx:id="listaMedicos" layoutX="89.0" layoutY="60.0" prefHeight="180.0" prefWidth="342.0" />
-                              <Button fx:id="botonMostrarMedicos" layoutX="122.0" layoutY="23.0" mnemonicParsing="false" onAction="#mostrarListaMedicos" text="Mostrar" />
+                              <Text layoutX="36.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista de los pacientes" />
+                              <TextArea fx:id="listaPacientes" layoutX="89.0" layoutY="60.0" prefHeight="180.0" prefWidth="342.0" />
+                              <Button fx:id="botonMostrarPacientes" layoutX="166.0" layoutY="23.0" mnemonicParsing="false" onAction="#mostrarListaMisPacientes" text="Mostrar" />
                            </children>
                         </Pane>
                      </children>

@@ -2,6 +2,8 @@ package repo;
 
 import application.model.Consultor;
 import application.model.Medico;
+import application.model.MensajeMedico;
+import application.model.MensajePaciente;
 import application.model.Paciente;
 import application.model.Sensor;
 
@@ -45,6 +47,8 @@ public interface Bd {
     
     // Recuperar todos los sensores
     List<Sensor> recuperarSensores();
+    
+    
 
     // Modificar un consultor por su dni (El registro se sabe que existe)
     boolean modificarConsultor(String dni, Consultor consultor);
@@ -69,4 +73,14 @@ public interface Bd {
     
     // Eliminar un sensor por su dni
     boolean eliminarSensor(String dni);
+
+    //Recuperar Mensaje Paciente por su dni
+	MensajePaciente recuperarMensaje(int id_mensaje);
+
+    //Recuperar Mensaje Medico por su dni
+	MensajeMedico recuperarMensajeCon(int id_mensaje);
+
+
+
+//	boolean altaMensaje(Mensaje id_mensaje);
 }

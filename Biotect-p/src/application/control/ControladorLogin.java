@@ -136,7 +136,7 @@ public class ControladorLogin {
     
 		try {
 
-			ControladorMenuConsultor controladorMenuConsultor = new ControladorMenuConsultor();
+			ControladorMenuConsultor controladorMenuConsultor = new ControladorMenuConsultor(cons);
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/MenuC.fxml"));
 			loader.setController(controladorMenuConsultor);
 			controladorMenuConsultor.setConsultor(cons);

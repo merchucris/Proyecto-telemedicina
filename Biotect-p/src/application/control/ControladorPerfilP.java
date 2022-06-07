@@ -42,9 +42,6 @@ public class ControladorPerfilP {
     private TextField botonCorreoP;
 
     @FXML
-    private TextField botonDNImedicoP;
-
-    @FXML
     private TextField botonSexoP;
 
     @FXML
@@ -106,6 +103,7 @@ public class ControladorPerfilP {
          botonApellidoP.setText(pacie.getApellidos());
          botonDNIP.setText(pacie.getDni());
          botonCorreoP.setText(pacie.getCorreo());
+         botonSexoP.setPromptText(pacie.getSexo());
      }
 
 

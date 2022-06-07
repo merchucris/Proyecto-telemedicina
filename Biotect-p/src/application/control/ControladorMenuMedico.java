@@ -48,9 +48,13 @@ public class ControladorMenuMedico {
 
     @FXML
     private Button botonVerDatosM;
+    
 
     @FXML
-    private Button botonCitasM;
+    private Button botonvisualizarDatos;
+
+    @FXML
+    private Button botonPacientesM;
 
     @FXML
     private Button botonSalirM;
@@ -74,7 +78,7 @@ public class ControladorMenuMedico {
     private TextField botonSexoP;
 
     @FXML
-    private TextField BotonEstadoP;
+    private TextField botonApellidoP;
 
 
     @FXML
@@ -134,19 +138,46 @@ public class ControladorMenuMedico {
         MariaBD ob = new MariaBD();
         Paciente paciee = ob.recuperarPaciente(botonDniPaciente.getText());
     
-         botonNombreP.setText(paciee.getNombre());      
+         botonNombreP.setText(paciee.getNombre());
+         botonApellidoP.setText(paciee.getApellidos());
          botonCorreoP.setText(paciee.getCorreo());
          //botonEdadP.setText(Integer.toString(paciee.getEdad()));
+         System.out.println("SEXO " + paciee.getSexo());
          botonSexoP.setPromptText(paciee.getSexo());
+         //botonSexoP.setText(paciee.getFechNac());
+
 
   }
+    
+    @FXML
+    void verDatosPacientes(ActionEvent event) {
+    	  try {
+  			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/VistaSensores3.fxml"));
+  			ControladorSensoresM ControladorSensor = new ControladorSensoresM(getMedico());
+  			//ControladorListaPacientes ControladorListaPacient = new ControladorListaPacientes(getMedico());
+  			loader.setController(ControladorSensor);
+  			Parent root = loader.load();
+  			Stage stage = new Stage();
+  			stage.setScene(new Scene(root));
+  			stage.initModality(Modality.WINDOW_MODAL);
+  			//stage.initOwner(((Node) (event.getSource())).getScene().getWindow());
+  			stage.show();
+  			Stage myStage = (Stage) this.botonvisualizarDatos.getScene().getWindow();
+  			myStage.close();
+  			
+  		  } catch (IOException e) {
+  			// TODO Auto-generated catch block
+  			e.printStackTrace();
+  		}
+
+    }
 
     
     @FXML
     void consultarPaciente(ActionEvent event) {
   	     try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/ListaPacientes.fxml"));
-			ControladorListaPacientes ControladorListaPacient = new ControladorListaPacientes(getMedico());
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/ListaMisPacientesM.fxml"));
+			ControladorListaPacientesMed ControladorListaPacient = new ControladorListaPacientesMed(getMedico());
 			//ControladorListaPacientes ControladorListaPacient = new ControladorListaPacientes(getMedico());
 			loader.setController(ControladorListaPacient);
 			Parent root = loader.load();
@@ -168,13 +199,48 @@ public class ControladorMenuMedico {
     
 
     @FXML
-    void verCitasM(ActionEvent event) {
+    void verPacientesM(ActionEvent event) {
+    	
+    	MariaBD bbdd = new MariaBD();
+    	try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/ListaPacientesTodos.fxml"));
+			ControladorListaPacientesTodos ControladorListaPacC = new ControladorListaPacientesTodos(getMedico());
+			loader.setController(ControladorListaPacC);
+			Parent root;
+			root = loader.load();
+			Stage stage = new Stage();
+			stage.setScene(new Scene(root));
+			stage.initModality(Modality.WINDOW_MODAL);
+			//stage.initOwner(((Node) (event.getSource())).getScene().getWindow());
+			stage.show();
+			Stage myStage = (Stage) this.botonPacientesM.getScene().getWindow();
+			myStage.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
     }
 
     @FXML
     void verMensajes(ActionEvent event) {
     	
+    	try {
+    		FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/vistaMensajeRecibidoMed.fxml"));
+    		ControladorMensajeRecibidoMed ControladorMensajRecMed = new ControladorMensajeRecibidoMed(this.medico);
+			loader.setController(ControladorMensajRecMed);
+			Parent root = loader.load();
+			Stage stage = new Stage();
+			stage.setScene(new Scene(root));
+			stage.initModality(Modality.WINDOW_MODAL);
+			//stage.initOwner(((Node) (event.getSource())).getScene().getWindow());
+			stage.show();
+			Stage myStage = (Stage) this.botonMensajes.getScene().getWindow();
+			myStage.close();
+    	    
+    		} catch (IOException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
     	
 
     }
@@ -184,7 +250,7 @@ public class ControladorMenuMedico {
     	
     	try {
     		FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/vistaEnviarMensaje.fxml"));
-    		ControladorEnviarMensaje ControladorMensaj = new ControladorEnviarMensaje();
+    		ControladorEnviarMensajeMed ControladorMensaj = new ControladorEnviarMensajeMed(this.medico);
 			loader.setController(ControladorMensaj);
 			Parent root = loader.load();
 			Stage stage = new Stage();

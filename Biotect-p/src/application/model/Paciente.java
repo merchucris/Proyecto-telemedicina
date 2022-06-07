@@ -13,6 +13,8 @@ public class Paciente extends Persona {
     
 	public Paciente(int id_paciente, String dni, String nombre, String apellidos, String correo, String fechaNac, String sexo, String[] medicos) {
 		super(dni, nombre, apellidos, correo);
+		this.sexo = sexo;
+		this.fechaNac = fechaNac;
 		System.out.print("Actualiza médicos" + this.medicos.size());
 		this.id_paciente = id_paciente;
 	}

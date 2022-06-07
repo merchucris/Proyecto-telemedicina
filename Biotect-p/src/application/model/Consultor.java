@@ -13,6 +13,14 @@ public class Consultor extends Persona {
 		this.id_consultor = id_consultor;
 	}
 
+	public int getId_consultor() {
+		return id_consultor;
+	}
+
+	public void setId_consultor(int id_consultor) {
+		this.id_consultor = id_consultor;
+	}
+
 	public String getUsuario() {
 		return getDni();
 	}

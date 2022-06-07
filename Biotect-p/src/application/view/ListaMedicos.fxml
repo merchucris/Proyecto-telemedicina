@@ -39,7 +39,7 @@
                         <Pane layoutX="33.0" layoutY="14.0" prefHeight="254.0" prefWidth="519.0" style="-fx-background-color: cbeff9;">
                            <children>
                               <Text layoutX="36.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mis médicos" />
-                              <TextArea fx:id="listaMedicos" layoutX="89.0" layoutY="60.0" onDragDetected="#mostrarListaMedicos" prefHeight="180.0" prefWidth="342.0" />
+                              <TextArea fx:id="listaMedicos" layoutX="89.0" layoutY="60.0" prefHeight="180.0" prefWidth="342.0" />
                               <Button fx:id="botonMostrarMedicos" layoutX="127.0" layoutY="23.0" mnemonicParsing="false" onAction="#mostrarListaMedicos" text="Mostrar" />
                            </children>
                         </Pane>

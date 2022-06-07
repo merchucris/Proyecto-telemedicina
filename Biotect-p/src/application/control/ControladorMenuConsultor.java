@@ -6,6 +6,7 @@ import java.util.List;
 import com.jfoenix.controls.JFXTextArea;
 
 import application.model.Consultor;
+import application.model.Medico;
 import application.model.Paciente;
 import application.model.Sensor;
 import javafx.event.ActionEvent;
@@ -23,6 +24,10 @@ public class ControladorMenuConsultor {
 
 	private Consultor consultor;
 	
+	public ControladorMenuConsultor(Consultor consultor) {
+		this.consultor  =consultor;
+	}
+		
     public Consultor getConsultor() {
 		return consultor;
 	}
@@ -31,9 +36,6 @@ public class ControladorMenuConsultor {
 		this.consultor = consultor;
 	}
 
-	@FXML
-    private JFXTextArea panelVisualizarOpcionC;
-
     @FXML
     private Button botonPerfilC;
 
@@ -41,10 +43,44 @@ public class ControladorMenuConsultor {
     private Button botonListaPacientes;
 
     @FXML
-    private Button botonVerDatosC;
+    private Button botonListaMedicos;
+    
+    @FXML
+    private Button botonEnviarMensaje;
+    
+    @FXML
+    private Button botonRecomendaciones;
+    
+    @FXML
+    private Button botonBuscarP;
+    
+    @FXML
+    private Button botonvisualizarDatos;
+
+    @FXML
+    private TextField botonDniPaciente;
+
+    @FXML
+    private TextField botonCorreoP;
+
+    @FXML
+    private TextField botonNombreP;
+
+    @FXML
+    private TextField botonSexoP;
+
+    @FXML
+    private TextField botonApellidoP;
 
     @FXML
     private Button botonSalirC;
+    
+    
+    void ListaMedico(){
+    	MariaBD ob = new MariaBD();
+    	ob.recuperarMedicos();
+    	
+    }
 
     @FXML
     void verPerfilC(ActionEvent event) {
@@ -56,7 +92,6 @@ public class ControladorMenuConsultor {
 			ControladorPerfilC controladorPerfilC = new ControladorPerfilC(getConsultor());
 			System.out.println("----*****--000");
 			loader.setController(controladorPerfilC);
-			System.out.println("----*****--01-dni: "+consultor.getDni());
 			controladorPerfilC.setCons(consultor);
 //			controladorPerfilC.setMiDNIC(consultor.getDni());
 			System.out.println("----*****--02");
@@ -77,6 +112,67 @@ public class ControladorMenuConsultor {
 			e.printStackTrace();
 		}
     }
+    
+    
+    @FXML
+    void buscarPaciente(ActionEvent event) {
+    	
+       //COMO EN EL REGISTRO DEL PACIENTE
+        MariaBD ob = new MariaBD();
+        Paciente paciee = ob.recuperarPaciente(botonDniPaciente.getText());
+    
+         botonNombreP.setText(paciee.getNombre());   
+         botonApellidoP.setText(paciee.getApellidos());      
+         botonCorreoP.setText(paciee.getCorreo());
+         //botonEdadP.setText(Integer.toString(paciee.getEdad()));
+         botonSexoP.setPromptText(paciee.getSexo());
+
+    }
+    
+    @FXML
+    void verDatosPacientes(ActionEvent event) {
+    	  try {
+  			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/VistaSensores3.fxml"));
+  			ControladorSensoresM ControladorSensor = new ControladorSensoresM(getConsultor());
+  			//ControladorListaPacientes ControladorListaPacient = new ControladorListaPacientes(getMedico());
+  			loader.setController(ControladorSensor);
+  			Parent root = loader.load();
+  			Stage stage = new Stage();
+  			stage.setScene(new Scene(root));
+  			stage.initModality(Modality.WINDOW_MODAL);
+  			//stage.initOwner(((Node) (event.getSource())).getScene().getWindow());
+  			stage.show();
+  			Stage myStage = (Stage) this.botonvisualizarDatos.getScene().getWindow();
+  			myStage.close();
+  			
+  		  } catch (IOException e) {
+  			// TODO Auto-generated catch block
+  			e.printStackTrace();
+  		}
+    }
+    
+    @FXML
+    void mostrarRecomendaciones(ActionEvent event) {
+    	
+    	try {
+    		FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/vistaInfoViajes.fxml"));
+    		ControladorInfoViaje ControladorInfoViaj = new ControladorInfoViaje(getConsultor());
+			loader.setController(ControladorInfoViaj);
+			Parent root = loader.load();
+			Stage stage = new Stage();
+			stage.setScene(new Scene(root));
+			stage.initModality(Modality.WINDOW_MODAL);
+			//stage.initOwner(((Node) (event.getSource())).getScene().getWindow());
+			stage.show();
+			Stage myStage = (Stage) this.botonRecomendaciones.getScene().getWindow();
+			myStage.close();
+    	    
+    		} catch (IOException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+
+    }
 
     @FXML
     void abrirLista(ActionEvent event) {
@@ -85,8 +181,8 @@ public class ControladorMenuConsultor {
     	//reiterar la lista for each
     	for (Consultor consultor :  listaConsultores) {
     		System.out.println("Datos consultor" + consultor.getNombre());
-    		panelVisualizarOpcionC.appendText("Nombre: " + consultor.getNombre() + " Apellidos: " + consultor.getApellidos());
-    		panelVisualizarOpcionC.appendText("###########################################");
+    		//panelVisualizarOpcionC.appendText("Nombre: " + consultor.getNombre() + " Apellidos: " + consultor.getApellidos());
+    		//panelVisualizarOpcionC.appendText("###########################################");
     		
     	}
     	// Mostrar lista
@@ -106,26 +202,91 @@ public class ControladorMenuConsultor {
 			cadenaSensores += "Temperatura: "+ sen.gettemperatura();
 			cadenaSensores += "\n";
   	}
-  	panelVisualizarOpcionC.setText(cadenaSensores);
+  	//panelVisualizarOpcionC.setText(cadenaSensores);
 
+    }
+    
+
+    @FXML
+    void enviarMensaje(ActionEvent event) {
+    	try {
+    		FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/vistaEnviarMensajeCons.fxml"));
+    		ControladorEnviarMensajeCon ControladorMensajC = new ControladorEnviarMensajeCon(getConsultor());
+			loader.setController(ControladorMensajC);
+			Parent root = loader.load();
+			Stage stage = new Stage();
+			stage.setScene(new Scene(root));
+			stage.initModality(Modality.WINDOW_MODAL);
+			//stage.initOwner(((Node) (event.getSource())).getScene().getWindow());
+			stage.show();
+			Stage myStage = (Stage) this.botonEnviarMensaje.getScene().getWindow();
+			myStage.close();
+    	    
+    		} catch (IOException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
     }
 
     @FXML
-    void verListaPacientes(ActionEvent event) {
-      	 MariaBD ob = new MariaBD();
-      	 List<Paciente> pacs = ob.recuperarPacientes();
-      	 String cadenaPacientes = "";
-      	 //List<String> medCheck = Arrays.asList(paciente.getMedicos());
-      	 for (Paciente pac:pacs){
-      		System.out.print("SENSORES AL PACIENTE ASOCIADOS: " + pac);
-      		    cadenaPacientes+= "Nombre: "+ pac.getNombre();
-      		    cadenaPacientes+="Apellido: " + pac.getApellidos();
-      		    cadenaPacientes += "DNI: "+ pac.getDni();
-      		    cadenaPacientes += "\n";
-      	}
-      	panelVisualizarOpcionC.setText(cadenaPacientes);
+    void verListaPacientes(ActionEvent event) { 
+    	
+    	MariaBD bbdd = new MariaBD();
+    	try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/ListaPacientesTodos.fxml"));
+			ControladorListaPacientesTodos ControladorListaPacC = new ControladorListaPacientesTodos(getConsultor());
+			loader.setController(ControladorListaPacC);
+			Parent root;
+			root = loader.load();
+			Stage stage = new Stage();
+			stage.setScene(new Scene(root));
+			stage.initModality(Modality.WINDOW_MODAL);
+			//stage.initOwner(((Node) (event.getSource())).getScene().getWindow());
+			stage.show();
+			Stage myStage = (Stage) this.botonListaPacientes.getScene().getWindow();
+			myStage.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	
+    	
+//      	 MariaBD ob = new MariaBD();
+//      	 List<Paciente> pacs = ob.recuperarPacientes();
+//      	 String cadenaPacientes = "";
+//      	 //List<String> medCheck = Arrays.asList(paciente.getMedicos());
+//      	 for (Paciente pac:pacs){
+//      		System.out.print("SENSORES AL PACIENTE ASOCIADOS: " + pac);
+//      		    cadenaPacientes+= "Nombre: "+ pac.getNombre();
+//      		    cadenaPacientes+="Apellido: " + pac.getApellidos();
+//      		    cadenaPacientes += "DNI: "+ pac.getDni();
+//      		    cadenaPacientes += "\n";
+//      	}
+//      	panelVisualizarOpcionC.setText(cadenaPacientes);
 
     }
+    
+    @FXML
+    void verListaMedicos(ActionEvent event) {
+    	try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/ListaMedicos.fxml"));  // RegistroConsultor.fxml"));
+			ControladorListaMedicosTodos controladorListaMedT = new ControladorListaMedicosTodos(consultor);
+			loader.setController(controladorListaMedT);
+			Parent root;
+			root = loader.load();
+			Stage stage = new Stage();
+			stage.setScene(new Scene(root));
+			stage.initModality(Modality.WINDOW_MODAL);
+			//stage.initOwner(((Node) (event.getSource())).getScene().getWindow());
+			stage.show();
+			Stage myStage = (Stage) this.botonPerfilC.getScene().getWindow();
+			myStage.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}    	
+
+    }
+    
+    
     @FXML
     void salirC(ActionEvent event) {
     	try {
@@ -145,12 +306,5 @@ public class ControladorMenuConsultor {
 			e.printStackTrace();
 		}
     }
-
-
-    	
-//    miNombreC.setText(this.consultor.getNombre());
-//    miApellidoC.setText(cons.getApellidos());
-//    miDNIC.setText(cons.getDni());
-//    miCorreoC.setText(cons.getCorreo());
 
 }

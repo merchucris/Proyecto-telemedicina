@@ -24,8 +24,9 @@ import repo.MariaBD;
 public class ControladorMenuPaciente {
     @FXML
     //Private JFXTextArea panelVisualizarP;
-    private JFXTextArea panelVisualizarEstadoP;
+    
 	private Paciente paciente;
+    
 	public ControladorMenuPaciente(Paciente pac) {
 		this.paciente = pac;
 		
@@ -40,10 +41,14 @@ public class ControladorMenuPaciente {
 		this.paciente = paciente;
 	}
 
-
-
     @FXML
     private Button botonPerfilP;
+    
+    @FXML
+    private Button botonverMedicosP;
+    
+    @FXML
+    private Button botonvisualizarMisDatos;
 
     @FXML
     private Button botonConsultarMedico;
@@ -52,7 +57,7 @@ public class ControladorMenuPaciente {
     private Button botonMensajeG;
 
     @FXML
-    private Button botonEnviarMensajeP;
+    private Button botonRecomendaciones;
 
 //    @FXML
 //    private Button botonVerDatos;
@@ -106,40 +111,114 @@ public class ControladorMenuPaciente {
     
 
     @FXML
-    void enviarMensajeP(ActionEvent event) {
-
+    void verRecomendaciones(ActionEvent event) {
+    	
+    	try {
+    		FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/vistaInfoViajes.fxml"));
+    		ControladorInfoViaje ControladorInfoViaj = new ControladorInfoViaje(getPaciente());
+			loader.setController(ControladorInfoViaj);
+			Parent root = loader.load();
+			Stage stage = new Stage();
+			stage.setScene(new Scene(root));
+			stage.initModality(Modality.WINDOW_MODAL);
+			//stage.initOwner(((Node) (event.getSource())).getScene().getWindow());
+			stage.show();
+			Stage myStage = (Stage) this.botonRecomendaciones.getScene().getWindow();
+			myStage.close();
+    	    
+    		} catch (IOException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
     }
     
 
     @FXML
     void verMensajesG(ActionEvent event) {
+    	
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/vistaMensajeRecibidoPac.fxml"));
+			ControladorMensajeRecibidoPac ControladorMensajeRecib = new ControladorMensajeRecibidoPac(getPaciente());
+			loader.setController(ControladorMensajeRecib);
+			Parent root = loader.load();
+			Stage stage = new Stage();
+			stage.setScene(new Scene(root));
+			stage.initModality(Modality.WINDOW_MODAL);
+			//stage.initOwner(((Node) (event.getSource())).getScene().getWindow());
+			stage.show();
+			Stage myStage = (Stage) this.botonMensajeG.getScene().getWindow();
+			myStage.close();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
     }
     
     @FXML
-    void verCitasP(ActionEvent event) {
-    	//Hacer una tabla citas
-
+    void verMedicosP(ActionEvent event) {
+    	
+    	try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/ListaMedicos.fxml"));  // RegistroConsultor.fxml"));
+			ControladorListaMedicosTodos controladorListaMedT = new ControladorListaMedicosTodos(getPaciente());
+			loader.setController(controladorListaMedT);
+			Parent root;
+			root = loader.load();
+			Stage stage = new Stage();
+			stage.setScene(new Scene(root));
+			stage.initModality(Modality.WINDOW_MODAL);
+			//stage.initOwner(((Node) (event.getSource())).getScene().getWindow());
+			stage.show();
+			Stage myStage = (Stage) this.botonverMedicosP.getScene().getWindow();
+			myStage.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}  
     }
 
+//    @FXML
+//    void visualizarDatosP(ActionEvent event) {
+//       	 MariaBD ob = new MariaBD();
+//       	 List<Sensor> senss = ob.recuperarSensores();
+//       	 String cadenaSensores = "";
+//       	 //List<String> medCheck = Arrays.asList(paciente.getMedicos());
+//       	 for (Sensor sen:senss){
+//       		 if (this.paciente.getDni().equals(sen.getDni())) {
+//       			System.out.print("SENSORES AL PACIENTE ASOCIADOS: " + sen);
+//       			//cadenaSensores+= "Fecha: "+ sen.getmarcaDeTiempo();
+//       			cadenaSensores+="Glucemia: " + sen.getglucemia();
+//       			cadenaSensores += "Saturación: "+ sen.getsaturacion();
+//       			cadenaSensores += "Temperatura: "+ sen.gettemperatura();
+//       			cadenaSensores += "\n";
+//       		 }
+//       		
+//       	}
+//   		//panelVisualizarP.setText(cadenaSensores);
+//    }
+    
     @FXML
-    void visualizarDatosP(ActionEvent event) {
-       	 MariaBD ob = new MariaBD();
-       	 List<Sensor> senss = ob.recuperarSensores();
-       	 String cadenaSensores = "";
-       	 //List<String> medCheck = Arrays.asList(paciente.getMedicos());
-       	 for (Sensor sen:senss){
-       		 if (this.paciente.getDni().equals(sen.getDni())) {
-       			System.out.print("SENSORES AL PACIENTE ASOCIADOS: " + sen);
-       			//cadenaSensores+= "Fecha: "+ sen.getmarcaDeTiempo();
-       			cadenaSensores+="Glucemia: " + sen.getglucemia();
-       			cadenaSensores += "Saturación: "+ sen.getsaturacion();
-       			cadenaSensores += "Temperatura: "+ sen.gettemperatura();
-       			cadenaSensores += "\n";
-       		 }
-       		
-       	}
-   		//panelVisualizarP.setText(cadenaSensores);
+    void verMisDatosP(ActionEvent event) {
+    	
+    	try {
+    	    FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/VistaSensores3.fxml"));
+			ControladorSensoresM ControladorSensorM = new ControladorSensoresM(getPaciente());
+			//ControladorListaPacientes ControladorListaPacient = new ControladorListaPacientes(getMedico());
+			loader.setController(ControladorSensorM);
+			Parent root = loader.load();
+			Stage stage = new Stage();
+			stage.setScene(new Scene(root));
+			stage.initModality(Modality.WINDOW_MODAL);
+			//stage.initOwner(((Node) (event.getSource())).getScene().getWindow());
+			stage.show();
+			Stage myStage = (Stage) this.botonvisualizarMisDatos.getScene().getWindow();
+			myStage.close();
+			
+		  } catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
     }
     
     @FXML

@@ -38,9 +38,9 @@
                      <children>
                         <Pane layoutX="33.0" layoutY="14.0" prefHeight="254.0" prefWidth="519.0" style="-fx-background-color: cbeff9;">
                            <children>
-                              <Text layoutX="36.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mis pacientes" />
-                              <TextArea fx:id="listaPacientes" layoutX="89.0" layoutY="60.0" onDragDetected="#mostrarListaPacientes" prefHeight="180.0" prefWidth="342.0" />
-                              <Button fx:id="botonMostrarPacientes" layoutX="127.0" layoutY="23.0" mnemonicParsing="false" onAction="#mostrarListaPacientes" text="Mostrar" />
+                              <Text layoutX="36.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista de todos los pacientes" />
+                              <TextArea fx:id="listaPacientes" layoutX="89.0" layoutY="60.0" prefHeight="180.0" prefWidth="342.0" />
+                              <Button fx:id="botonMostrarTodosPacientes" layoutX="202.0" layoutY="23.0" mnemonicParsing="false" onAction="#mostrarListaTodosPacientes" text="Mostrar" />
                            </children>
                         </Pane>
                      </children>

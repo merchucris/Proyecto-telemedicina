@@ -3,10 +3,14 @@ package repo;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import application.model.Consultor;
+import application.model.FrecuenciaRespiratoria;
 import application.model.Medico;
+import application.model.MensajeMedico;
+import application.model.MensajePaciente;
 import application.model.Paciente;
+import application.model.Saturacion;
 import application.model.Sensor;
-
+import application.model.Temperatura;
 
 import java.io.*;
 import java.lang.reflect.Type;
@@ -16,6 +20,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,6 +54,11 @@ public class MariaBD implements Bd {
     //Lista de sensores
     private List<Sensor> sensores;
     
+    // Mensajes al paciente
+    private List<MensajePaciente> mensajes;
+    
+    //Mensaje al médico
+    private List<MensajeMedico> mensajescon;
     
     private String BBDDName = "prbbiotect";
     private Connection conn = null;
@@ -75,16 +85,14 @@ public class MariaBD implements Bd {
 				//PASO 2: Abro la conexión
 	        	conn = DriverManager.getConnection(
 	                    "jdbc:mariadb://195.235.211.197/prbbiotect", USER, PASS);
-	            System.out.println("Connectado a la Base de Datos...");
-	         
-	      
+	            System.out.println("Connectado a la Base de Datos..."); 
 				
 			} catch (ClassNotFoundException e1) {
 				// Maneja los errores para JDBC
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} catch (SQLException e) {
-				// Maneja los errores para Class.forName
+				// meManeja los errores para Class.forName
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -104,6 +112,9 @@ public class MariaBD implements Bd {
         this.consultores = recuperarListaConsultores();
         this.medicos = recuperarListaMedicos();
         this.pacientes = recuperarListaPacientes();
+        this.mensajes = recuperarListaMensajes();
+        this.mensajescon = recuperarListaMensajesConsultor();
+        //this.mensajes = recuperarListaMensajes();
 //        System.out.println("####### PACIENTES PRUEBAS ##########");
 //        for (Paciente pac : this.pacientes) {
 //        	System.out.println("##################");
@@ -134,24 +145,23 @@ public class MariaBD implements Bd {
 		    		
 		    		System.out.print("LA CONTRASEÑA ES CORRECTA");
 		   	     try {
-				     //String sql = "SELECT * FROM usuarios WHERE "PACIENTE" ;" ;
-		   	    	 
+				    //String sql = "SELECT * FROM usuarios WHERE "PACIENTE" ;"
 		    		// Sabiendo el tipo de usuario
 		    		// Leer de la tabla correspondiente
 		    		// PACIENTE
 		    		 tipo = rs.getString("TIPO");
 		    		
 		    	}catch(Error e1) {
-		    		}
-		    	}
+		        }
+		   	     
+		       }
 		    	
 		    }
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        
-    	
+        	
     	return tipo;
     }
     
@@ -359,7 +369,7 @@ public class MariaBD implements Bd {
 	    	return listaMedicos;
     }
     
-    // Recuperar el listado de usuarios del JSON como objetos Java
+    // Recuperar el listado de usuarios de la base de datos como objetos Java
     private List<Paciente> recuperarListaPacientes() {
    	     Connection conn = this.getConexion();
 	     Statement stmt = null;
@@ -387,6 +397,7 @@ public class MariaBD implements Bd {
 				String fechNac = rs.getString("FECHA_NACIMIENTO");
 				//int edad = rs.getInt("FECHA_NACIMIENTO");
 				String sexo = rs.getString("SEXO");
+				System.out.println("SEXO SE almacena "  + sexo);
 				//String[] medicos = rs.getArray("MEDICOA1 + MEDICOA2 + MEDICOA3 + MEDICOA4");
 				String [] medicos = new String [5];
 				Paciente pac = new Paciente(id_paciente,dni, nombre, apellidos, correo, fechNac, sexo, medicos);
@@ -399,6 +410,76 @@ public class MariaBD implements Bd {
 			}
 	     return listaPacientes;
     }
+    
+    // Recuperar el listado de mensajes del paciente de la base de datos como objetos Java
+    public List<MensajePaciente> recuperarListaMensajes() {
+  	     Connection conn = this.getConexion();
+	     Statement stmt = null;
+	     PreparedStatement pstmt = null;
+	     List<MensajePaciente> listaMensajes =new ArrayList<>();
+	     try {
+		     String sql = "SELECT * FROM mensajepaciente;";
+	         stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql );
+			// SELECT * from pacientemedico where ID_paciente = 1 INNER JOIN (medicos) medicos.ID_medico = pacientesmedico.id_medico ;
+
+			while ( rs.next() ) {
+				int id_mensaje = rs.getInt("ID_mensajeP");
+				int id_paciente_receptor = rs.getInt("ID_paciente");
+				int id_medico_remitente = rs.getInt("ID_medico");
+				String asunto = rs.getString("Asunto");
+				String mensaje = rs.getString("Mensaje");				
+				Timestamp marcaDeTiempo = rs.getTimestamp("Time_stamp");
+				MensajePaciente men = new  MensajePaciente(id_mensaje , id_paciente_receptor, marcaDeTiempo, id_medico_remitente, asunto, 
+					       mensaje);
+				
+				listaMensajes.add(men);
+			}
+	     }catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	     return listaMensajes;
+    }
+    
+    // Recuperar el listado de mensajes del paciente de la base de datos como objetos Java
+    public List<MensajeMedico> recuperarListaMensajesConsultor() {
+  	     Connection conn = this.getConexion();
+	     Statement stmt = null;
+	     PreparedStatement pstmt = null;
+	     List<MensajeMedico> listaMensajesC =new ArrayList<>();
+	     try {
+		     String sql = "SELECT * FROM mensajemedico" ;
+	         stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql );
+			// SELECT * from pacientemedico where ID_paciente = 1 INNER JOIN (medicos) medicos.ID_medico = pacientesmedico.id_medico ;
+			
+			/**
+			 * while ( rs.next() ) {
+			 * 	 print (rs.getString("ID_Medico"))
+			 * 	       // 1
+			 *         // 2
+			 * }
+			 */
+			while ( rs.next() ) {
+				int id_mensaje = rs.getInt("ID_mensajeM");
+				int id_medico_receptor = rs.getInt("ID_medico");
+				int id_consultor_remitente = rs.getInt("ID_consultor");
+				String asunto = rs.getString("Asunto");
+				String mensaje = rs.getString("Mensaje");				
+				Timestamp marcaDeTiempo = rs.getTimestamp("Time_stamp");
+				MensajeMedico menc = new  MensajeMedico (id_mensaje, id_medico_receptor, marcaDeTiempo, id_consultor_remitente, asunto, 
+					       mensaje);
+				
+				listaMensajesC.add(menc);
+			}
+	     }catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	     return listaMensajesC;
+    }
+    // Recuperar el listado de médicos de la base de datos como objetos Java
     public List<Medico> getMedicosPaciente(Paciente pac) {
   	     Connection conn = this.getConexion();
 	     Statement stmt = null;
@@ -433,6 +514,80 @@ public class MariaBD implements Bd {
 	     //Return lista de medicos
 	     return listaMedicos;
     }
+    
+    public List<Paciente> getPacienteMedico(Medico med) {
+ 	     Connection conn = this.getConexion();
+	     Statement stmt = null;
+	     PreparedStatement pstmt = null;
+	     List<Paciente> listaPacientes =new ArrayList<>();
+	     try {
+	    	 System.out.println("ID MEDICO " + med.getId_medico());
+		     String sql = "SELECT * FROM pacientemedico INNER JOIN paciente ON pacientemedico.ID_paciente = paciente.ID_paciente"
+		     		+ " where pacientemedico.ID_medico = '" +med.getId_medico() + "';" ;
+	         stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql );
+			while ( rs.next() ) {
+				
+				int id_paciente = rs.getInt("ID_paciente");
+				System.out.println("PACIENTES " +id_paciente);
+				String dni = rs.getString("DNI_paciente"); //getInt(0);
+				String nombre = rs.getString("NOMBRE");
+				String apellidos = rs.getString("APELLIDO");
+				String correo = rs.getString("CORREO");
+				String fechNac = rs.getString("FECHA_NACIMIENTO");
+				//int edad = rs.getInt("FECHA_NACIMIENTO");
+				String sexo = rs.getString("SEXO");
+				//String[] medicos = rs.getArray("MEDICOA1 + MEDICOA2 + MEDICOA3 + MEDICOA4");
+				String [] medicos = new String [5];
+				Paciente pac = new Paciente(id_paciente,dni, nombre, apellidos, correo, fechNac, sexo, medicos);
+				listaPacientes.add(pac);
+			//listamedicos.add
+			// Hacer push a la lista con el nuevo medico
+			}
+	     
+	     
+	     }
+	     catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	     //Return lista de medicos
+	     return listaPacientes;
+   }
+    
+//    public List<MensajePaciente> getMensajesPaciente(Paciente pac) {
+// 	     Connection conn = this.getConexion();
+//	     Statement stmt = null;
+//	     PreparedStatement pstmt = null;
+//	     List<MensajePaciente> listaMensajesPac =new ArrayList<>();
+//	     try {
+//		     String sql = "SELECT * FROM mensajepaciente INNER JOIN paciente ON mensajepaciente.ID_paciente = paciente.ID_paciente"
+//		     		+ " where mensajepaciente.ID_paciente = '" +pac.getId_paciente() + "';" ;
+//	         stmt = conn.createStatement();
+//			ResultSet rs = stmt.executeQuery(sql );
+//			while ( rs.next() ) {
+//				System.out.println("MEDICO DEL PACIENTE " + rs.getInt("ID_medico"));
+//				System.out.println("DNI DEL Medico " + rs.getString("DNI_medico"));
+//				int id_mensaje = rs.getInt("ID_mensajeP");
+//				int id_paciente_receptor = rs.getInt("ID_paciente");
+//				int id_medico_remitente = rs.getInt("ID_medico");
+//				String asunto = rs.getString("Asunto");
+//				String mensaje = rs.getString("Mensaje");				
+//				Timestamp marcaDeTiempo = rs.getTimestamp("Time_stamp");
+//				MensajePaciente menP = new  MensajePaciente(id_mensaje , id_paciente_receptor, marcaDeTiempo, id_medico_remitente, asunto, 
+//					       mensaje);
+//				listaMensajesPac.add(menP);
+//
+//			}
+//	     }
+//	     catch (SQLException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//	     
+//	     return listaMensajesPac;
+//   }
+    
 	// Recuperar el listado de usuarios del JSON como objetos Java
     public List<Sensor> recuperarListaSensores() {
   	     Connection conn = this.getConexion();
@@ -460,6 +615,93 @@ public class MariaBD implements Bd {
 			}
 	     return listaSensores;
     }
+    
+    //SENSOR DE TEMPERATURA
+    public List<Temperatura> recuperarListaTemperatura(String dniPaciente) {
+        Connection conn = this.getConexion();
+          Statement stmt = null;
+          PreparedStatement pstmt = null;
+          List<Temperatura> listaTemperaturas =new ArrayList<>();
+          try {
+              String sql = "SELECT * FROM temperatura WHERE Dni_paciente = '"+dniPaciente+"';" ;
+              stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql);
+         
+             while ( rs.next() ) {
+                 int id_temperatura = rs.getInt("ID_temperatura");
+                 String dni = rs.getString("DNI_paciente"); //getInt(0);
+                 float temperatura = rs.getFloat("Temperatura");
+                 String marcaDeTiempo = rs.getString("Time_Stamp");
+
+                 Temperatura temps = new Temperatura(id_temperatura,dni, marcaDeTiempo, temperatura);
+                 
+                 listaTemperaturas.add(temps);
+             }
+          }catch (SQLException e) {
+                 // TODO Auto-generated catch block
+                 e.printStackTrace();
+             }
+          
+             return listaTemperaturas;
+     }
+    
+    //SENSOR DE FRECUENCIA RESPIRATORIA
+    public List<FrecuenciaRespiratoria> recuperarListaFrecRepiatoria(String dniPaciente) {
+          Connection conn = this.getConexion();
+          Statement stmt = null;
+          PreparedStatement pstmt = null;
+          List<FrecuenciaRespiratoria> listaFrecuenciaRespiratoria =new ArrayList<>();
+          try {
+              String sql = "SELECT * FROM frecuenciarespiratoria WHERE Dni_paciente = '"+dniPaciente+"';" ;
+              stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql);
+         
+             while ( rs.next() ) {
+                 int id_frecRespirato = rs.getInt("ID_frecuencia");
+                 String dni = rs.getString("DNI_paciente"); //getInt(0);
+                 float frec_respi = rs.getFloat("Frec_respi");
+                 String marcaDeTiempo = rs.getString("Time_Stamp");
+
+                 FrecuenciaRespiratoria frec = new FrecuenciaRespiratoria(id_frecRespirato,dni, marcaDeTiempo, frec_respi);
+                 
+                 listaFrecuenciaRespiratoria.add(frec);
+             }
+          }catch (SQLException e) {
+                 // TODO Auto-generated catch block
+                 e.printStackTrace();
+             }
+          
+             return listaFrecuenciaRespiratoria;
+     }
+    //SENSOR DE SATURACIÓN
+    public List<Saturacion> recuperarListaSaturacion(String dniPaciente) {
+          Connection conn = this.getConexion();
+          Statement stmt = null;
+          PreparedStatement pstmt = null;
+          List<Saturacion> listaSaturacion =new ArrayList<>();
+          try {
+              String sql = "SELECT * FROM oxigeno WHERE Dni_paciente = '"+dniPaciente+"';" ;
+              stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql);
+         
+             while ( rs.next() ) {
+                 int id_saturacion = rs.getInt("ID_oxigeno");
+                 String dni = rs.getString("DNI_paciente"); //getInt(0);
+                 float saturacion = rs.getFloat("Saturacion");
+                 String marcaDeTiempo = rs.getString("Time_Stamp");
+
+                 Saturacion satu = new Saturacion(id_saturacion,dni, marcaDeTiempo, saturacion);
+                 
+                 listaSaturacion.add(satu);
+             }
+          }catch (SQLException e) {
+                 // TODO Auto-generated catch block
+                 e.printStackTrace();
+             }
+          
+             return listaSaturacion;
+     }
+
 
     // BORRAR, CONFIRMAR
     // Recuperar el contenido de un fichero JSON del almacenamiento como String
@@ -543,7 +785,7 @@ public class MariaBD implements Bd {
 		}
     }
     
-    //Guardar el Json de pacientes
+    //Guardar la base de datos de pacientes
     private void guardarPacientes(Paciente pac, String password) {
     	Connection conn = this.getConexion();
  	     try {
@@ -568,13 +810,38 @@ public class MariaBD implements Bd {
 		}
     }
 
-    // Guardar el JSON de consultores
+    // Guardar la base de datos de consultores
     private void guardarSensores() {
         String json = gson.toJson(this.sensores);
         
         File file = new File(FICHERO_BD_SENSORES);
         guardarJSONFichero(json,file);
     }
+    
+//    //Guardar la base de datos de pacientes
+//    private void guardarMensajes() {
+//    	Connection conn = this.getConexion();
+// 	     try {
+// 	    	// 1 -tabla usuarios 
+// 	    	// DNI PK
+// 	    	// 2 - tabla consultores con DNI de usuarios
+// 	    	// DNI FK
+// 	    	 
+// 	      // Guardar en la tabla Usuarios
+// 	     String SQL_INSERT= "INSERT INTO usuarios (DNI_usuarios, TIPO, PASSWORD)"
+//               +  " values('" + pac.getDni()+"','"+ "PACIENTE"+ "','"+ password  +"');";
+// 	     stmt = conn.createStatement();
+//	     stmt.executeUpdate(SQL_INSERT);
+//	     // Guardar en la tabla consultores
+// 	     SQL_INSERT= "INSERT INTO paciente (DNI_paciente, NOMBRE, APELLIDO, CORREO, FECHA_NACIMIENTO, SEXO)"
+//	                       +  " values('"+ pac.getDni()+"','"+pac.getNombre()+"','"+pac.getApellidos()+"','"+pac.getCorreo()+"','"+pac.getFechNac()+"','"+pac.getSexo()+"');";
+// 	     stmt.executeUpdate(SQL_INSERT);
+// 	  
+//	     }catch (SQLException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//		}
+//    }
 
     //Escribir un JSON en el fichero especificado
     private void guardarJSONFichero(String json, File fichero) {
@@ -728,7 +995,7 @@ public class MariaBD implements Bd {
         return true;
     }
 
-    // Añadir un nuevo consultor
+    // Añadir un nuevo sensor
     @Override
     public boolean altaSensor(Sensor sensor) {
         // No debe ya haber un consultor
@@ -754,6 +1021,64 @@ public class MariaBD implements Bd {
         return true;
     }
     
+    
+    //Añadir un nuevo mensaje al paciente
+    public boolean altaMensaje(MensajePaciente mensaje) {
+        if (recuperarMensaje(mensaje.getId_Mensaje()) != null) {
+            return false;
+        }
+
+        //Para depurar
+        System.out.println("Dando de alte mensaje [" + mensaje.getId_Mensaje() + "]...");
+        //Agregamos el usuario a la lista de objetos de usuarios Java
+        this.mensajes.add(mensaje);
+        //Para depurar
+      
+        // Guardar los mensajes
+    	Connection conn = this.getConexion();
+	     try {
+	     String SQL_INSERT= "INSERT INTO mensaje (ID_mensajeP, ID_paciente, ID_medico, Asunto, Mensaje)"
+	                       +  " values('"+ mensaje.getId_Mensaje()+"','"+mensaje.id_paciente_receptor+"','"
+	    		           +  mensaje.id_medico_remitente+"','"+mensaje.getAsunto()+"','"+mensaje.getMensaje()+"');";
+	     stmt = conn.createStatement();
+	     stmt.executeUpdate(SQL_INSERT);
+	     System.out.println("Mensaje dado de alta correctamente");
+	     }catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+		}
+        
+        return true;
+    }
+    
+    //Añadir un nuevo mensaje al médico
+    public boolean altaMensajeAlMedico(MensajeMedico mensajescon) {
+        if (recuperarMensaje(mensajescon.getId_Mensaje()) != null) {
+            return false;
+        }
+
+        //Para depurar
+        System.out.println("Dando de alte mensaje [" + mensajescon.getId_Mensaje() + "]...");
+        //Agregamos el usuario a la lista de objetos de usuarios Java
+        this.mensajescon.add(mensajescon);
+        //Para depurar
+      
+        // Guardar los mensajes
+    	Connection conn = this.getConexion();
+	     try {
+	     String SQL_INSERT= "INSERT INTO mensajemedico (ID_mensajeM, ID_medico, ID_consultor, Asunto, Mensaje)"
+	                       +  " values('"+ mensajescon.getId_Mensaje()+"','"+ mensajescon.id_medico_receptor+"','"
+	    		           +  mensajescon.id_consultor_remitente+"','"+ mensajescon.getAsunto()+"','"+ mensajescon.getMensajeCon()+"');";
+	     stmt = conn.createStatement();
+	     stmt.executeUpdate(SQL_INSERT);
+	     System.out.println("Mensaje dado de alta correctamente");
+	     }catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+		}
+        
+        return true;
+    }
     // Recuperar un consultor por su dni
     @Override
     public Consultor recuperarConsultor(String dni) {
@@ -812,11 +1137,47 @@ public class MariaBD implements Bd {
         	return null;
     }
     
+    // Recuperar un paciente por su dni
+//    @Override
+//    public Mensaje recuperarMensaje(int id_mensaje) {
+//    	 System.out.println("Buscando mensaje [" + id_mensaje + "]...");
+//
+//         if  (id_mensaje != null) {
+//             for (Mensaje mensajeBusqueda : mensajes) {
+//            	 System.out.println("Mensaje [" + mensajeBusqueda.getId_Mensaje() + "] -> OK");
+//                 if (mensajeBusqueda.getId_Mensaje()).equals(id_mensaje)) {
+//                     System.out.println("Mensaje encontrado [" + id_mensaje + "] -> OK");
+//                     
+//                     return mensajeBusqueda;
+//                 }
+//             }
+//         } 
+//        	//Si no se ha encontrado el usuario
+//        	System.out.println("No se ha encontrado el paciente [" + id_mensaje + "]");
+//        	return null;
+//    }
+    
     // Recuperar un sensor por su dni
     @Override
     public Sensor recuperarSensor(String dni) {
         return recuperarSensorPorDni(dni);
     }
+       
+    // Recuperar un mensaje por su dni
+	@Override
+	public MensajePaciente recuperarMensaje(int id_mensaje) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+    // Recuperar un mensaje por su dni
+	@Override
+	public MensajeMedico recuperarMensajeCon(int id_mensaje) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
 
     // Recuperar todos los consultores
     @Override
@@ -909,5 +1270,6 @@ public class MariaBD implements Bd {
 
         return true;
     }
+    
 
 }

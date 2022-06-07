@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXTextArea?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.SplitPane?>
@@ -39,12 +38,16 @@
                      <children>
                         <Pane layoutX="32.0" layoutY="14.0" prefHeight="150.0" prefWidth="180.0" style="-fx-background-color: cbeff9;" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="20.0">
                            <children>
-                              <Text layoutX="33.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Estado paciente">
+                              <Text layoutX="15.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ver datos pacientes">
                                  <font>
                                     <Font name="Times New Roman Bold" size="18.0" />
                                  </font>
                               </Text>
-                              <JFXTextArea fx:id="panelVisualizarEstadoM" layoutX="21.0" layoutY="53.0" prefHeight="84.0" prefWidth="145.0" />
+                              <Button fx:id="botonvisualizarDatos" layoutX="13.0" layoutY="61.0" mnemonicParsing="false" onAction="#verDatosPacientes" prefHeight="54.0" prefWidth="155.0" style="-fx-background-color: white;" text="Visualizar datos">
+                                 <font>
+                                    <Font name="Times New Roman Bold" size="18.0" />
+                                 </font>
+                              </Button>
                            </children></Pane>
                         <Pane layoutX="250.0" layoutY="20.0" prefHeight="150.0" prefWidth="180.0" style="-fx-background-color: white;" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="20.0">
                            <children>
@@ -66,7 +69,7 @@
                         </Pane>
                         <Pane layoutX="30.0" layoutY="306.0" prefHeight="75.0" prefWidth="180.0" style="-fx-background-color: white;">
                            <children>
-                              <Button fx:id="botonCitasM" layoutX="13.0" layoutY="11.0" mnemonicParsing="false" onAction="#verCitasM" prefHeight="54.0" prefWidth="155.0" style="-fx-background-color: cbeff9;" text="Mis Consultas">
+                              <Button fx:id="botonPacientesM" layoutX="13.0" layoutY="11.0" mnemonicParsing="false" onAction="#verPacientesM" prefHeight="54.0" prefWidth="155.0" style="-fx-background-color: cbeff9;" text="Ver Pacientes">
                                  <font>
                                     <Font name="Times New Roman Bold" size="18.0" />
                                  </font>
@@ -85,19 +88,18 @@
                                  <font>
                                     <Font name="Times New Roman" size="14.0" />
                                  </font></Text>
-                              <TextField fx:id="botonCorreoP" layoutX="150.0" layoutY="155.0" prefHeight="25.0" prefWidth="162.0" />
                               <TextField fx:id="botonNombreP" layoutX="150.0" layoutY="125.0" prefHeight="25.0" prefWidth="162.0" />
-                              <Text layoutX="43.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre completo">
+                              <Text layoutX="91.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre ">
                                  <font>
                                     <Font name="Times New Roman" size="14.0" />
                                  </font></Text>
-                              <Text layoutX="41.0" layoutY="171.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Correo electrónico">
+                              <Text layoutX="92.0" layoutY="173.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Apellido">
                                  <font>
                                     <Font name="Times New Roman" size="14.0" />
                                  </font></Text>
                               <TextField fx:id="botonSexoP" layoutX="150.0" layoutY="216.0" prefHeight="25.0" prefWidth="162.0" />
-                              <TextField fx:id="BotonEstadoP" layoutX="150.0" layoutY="186.0" prefHeight="25.0" prefWidth="162.0" />
-                              <Text layoutX="39.0" layoutY="202.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Estado del paciente">
+                              <TextField fx:id="botonCorreoP" layoutX="150.0" layoutY="186.0" prefHeight="25.0" prefWidth="162.0" />
+                              <Text layoutX="39.0" layoutY="202.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Correo electrónico">
                                  <font>
                                     <Font name="Times New Roman" size="14.0" />
                                  </font></Text>
@@ -105,6 +107,7 @@
                                  <font>
                                     <Font name="Times New Roman" size="14.0" />
                                  </font></Text>
+                              <TextField fx:id="botonApellidoP" layoutX="150.0" layoutY="156.0" prefHeight="25.0" prefWidth="162.0" />
                            </children>
                         </Pane>
                         <Pane layoutX="494.0" layoutY="20.0" prefHeight="150.0" prefWidth="180.0" style="-fx-background-color: white;" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="20.0">

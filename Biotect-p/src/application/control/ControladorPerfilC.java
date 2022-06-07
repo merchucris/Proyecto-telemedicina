@@ -126,8 +126,8 @@ public class ControladorPerfilC {
     void volverMenuC(ActionEvent event) {
 
     	try {
-    		FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/MenuConsultor.fxml"));
-    		ControladorMenuConsultor controladorMenuConsultor = new ControladorMenuConsultor();
+    		FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/MenuC.fxml"));
+    		ControladorMenuConsultor controladorMenuConsultor = new ControladorMenuConsultor(cons);
 			loader.setController(controladorMenuConsultor);
 			Parent root = loader.load();
 			Stage stage = new Stage();
@@ -145,7 +145,7 @@ public class ControladorPerfilC {
     }
 
     @FXML
-    void botonSalir(ActionEvent event) {
+    void SalirC(ActionEvent event) {
     	try {
     		FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/VentanaSalir2.fxml"));
 			ControladorSalir ControladorSalirMenu = new ControladorSalir();
